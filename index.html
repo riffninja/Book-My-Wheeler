@@ -278,6 +278,14 @@
       cursor: pointer; transition: var(--transition);
     }
     .fleet-tab.active, .fleet-tab:hover { background: var(--navy); border-color: var(--navy); color: white; }
+    .car-subtabs { display: none; gap: 8px; flex-wrap: wrap; margin-bottom: 28px; }
+    .car-subtabs.visible { display: flex; }
+    .car-subtab {
+      padding: 7px 18px; border-radius: 25px; border: 2px solid var(--teal);
+      background: white; color: var(--teal); font-size: 13px; font-weight: 600;
+      cursor: pointer; transition: var(--transition);
+    }
+    .car-subtab.active, .car-subtab:hover { background: var(--teal); border-color: var(--teal); color: white; }
     .fleet-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
     .vehicle-card {
       background: white; border-radius: var(--radius-lg); overflow: hidden;
@@ -287,7 +295,7 @@
     .vehicle-card:hover { transform: translateY(-6px); box-shadow: 0 20px 48px rgba(0,0,0,0.12); border-color: var(--navy); }
     .vehicle-card.hidden { display: none; }
     .vehicle-img {
-      height: 160px;
+      height: 190px;
       display: flex; align-items: center; justify-content: center;
       font-size: 5rem; position: relative;
     }
@@ -295,7 +303,7 @@
     .vehicle-img.bike-bg { background: linear-gradient(135deg, #e3f2fd, #bbdefb); }
     .vehicle-img.car-bg { background: linear-gradient(135deg, #e8f5e9, #c8e6c9); }
     .vehicle-img.suv-bg { background: linear-gradient(135deg, #e0f7fa, #b2ebf2); }
-    .vehicle-img img { height: 130px; width: 100%; object-fit: contain; padding: 8px; }
+    .vehicle-img img { height: 100%; width: 100%; object-fit: contain; padding: 4px; }
     .vehicle-badge {
       position: absolute; top: 12px; left: 12px;
       background: var(--primary); color: white;
@@ -543,8 +551,8 @@
         <li><a href="#contact">Contact</a></li>
       </ul>
       <div class="nav-cta">
-        <a href="https://wa.me/91XXXXXXXXXX" class="nav-wa" target="_blank" rel="noopener">
-          <i class="fab fa-whatsapp"></i> +91 XXXXXXXXXX
+        <a href="https://wa.me/919579868810" class="nav-wa" target="_blank" rel="noopener">
+          <i class="fab fa-whatsapp"></i> +91 95798 68810
         </a>
       </div>
       <div class="hamburger" id="hamburger" onclick="toggleMenu()">
@@ -562,7 +570,7 @@
   <a href="#how-it-works" onclick="toggleMenu()">How It Works</a>
   <a href="#faq" onclick="toggleMenu()">FAQ</a>
   <a href="#contact" onclick="toggleMenu()">Contact</a>
-  <a href="https://wa.me/91XXXXXXXXXX" class="mob-wa" target="_blank" rel="noopener">
+  <a href="https://wa.me/919579868810" class="mob-wa" target="_blank" rel="noopener">
     <i class="fab fa-whatsapp"></i> WhatsApp Us
   </a>
 </div>
@@ -730,8 +738,14 @@
     <div class="fleet-tabs" style="margin-top:32px;">
       <button class="fleet-tab active" data-filter="all">All Vehicles</button>
       <button class="fleet-tab" data-filter="scooter">🛵 Scooters</button>
-      <button class="fleet-tab" data-filter="bike">🏍️ Bikes</button>
       <button class="fleet-tab" data-filter="car">🚗 Cars</button>
+    </div>
+    <div class="car-subtabs" id="carSubtabs">
+      <button class="car-subtab active" data-subfilter="all">All Cars</button>
+      <button class="car-subtab" data-subfilter="hatchback">Hatchback</button>
+      <button class="car-subtab" data-subfilter="sedan">Sedan</button>
+      <button class="car-subtab" data-subfilter="suv">SUV</button>
+      <button class="car-subtab" data-subfilter="mpv">MPV</button>
     </div>
     <div class="fleet-grid">
 
@@ -745,45 +759,6 @@
           <div class="vehicle-name">Honda Activa 6G</div>
           <div class="vehicle-tagline">The all-rounder city scooter</div>
           <div class="vehicle-tags"><span class="vehicle-tag">Automatic</span><span class="vehicle-tag">Fuel Efficient</span><span class="vehicle-tag">Easy Ride</span></div>
-          <div class="vehicle-footer">
-            <div class="vehicle-price">₹350 <span>/ day</span></div>
-            <button class="vehicle-enquire" onclick="scrollToForm()">Enquire Now</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="vehicle-card fade-in" data-type="scooter">
-        <div class="vehicle-img scooter-bg">🛵</div>
-        <div class="vehicle-body">
-          <div class="vehicle-name">TVS Jupiter</div>
-          <div class="vehicle-tagline">Comfortable city rider</div>
-          <div class="vehicle-tags"><span class="vehicle-tag">Automatic</span><span class="vehicle-tag">Spacious</span><span class="vehicle-tag">Comfortable</span></div>
-          <div class="vehicle-footer">
-            <div class="vehicle-price">₹350 <span>/ day</span></div>
-            <button class="vehicle-enquire" onclick="scrollToForm()">Enquire Now</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="vehicle-card fade-in" data-type="scooter">
-        <div class="vehicle-img scooter-bg">🛵</div>
-        <div class="vehicle-body">
-          <div class="vehicle-name">Suzuki Access 125</div>
-          <div class="vehicle-tagline">Premium sporty scooter</div>
-          <div class="vehicle-tags"><span class="vehicle-tag">Automatic</span><span class="vehicle-tag">Sporty</span><span class="vehicle-tag">Premium</span></div>
-          <div class="vehicle-footer">
-            <div class="vehicle-price">₹400 <span>/ day</span></div>
-            <button class="vehicle-enquire" onclick="scrollToForm()">Enquire Now</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="vehicle-card fade-in" data-type="scooter">
-        <div class="vehicle-img scooter-bg">🛵</div>
-        <div class="vehicle-body">
-          <div class="vehicle-name">Honda Dio</div>
-          <div class="vehicle-tagline">Stylish & lightweight</div>
-          <div class="vehicle-tags"><span class="vehicle-tag">Automatic</span><span class="vehicle-tag">Lightweight</span><span class="vehicle-tag">Stylish</span></div>
           <div class="vehicle-footer">
             <div class="vehicle-price">₹350 <span>/ day</span></div>
             <button class="vehicle-enquire" onclick="scrollToForm()">Enquire Now</button>
@@ -806,74 +781,8 @@
         </div>
       </div>
 
-      <!-- BIKES -->
-      <div class="vehicle-card fade-in" data-type="bike">
-        <div class="vehicle-img bike-bg">🏍️<div class="vehicle-badge">Bestseller</div></div>
-        <div class="vehicle-body">
-          <div class="vehicle-name">Royal Enfield Classic 350</div>
-          <div class="vehicle-tagline">Iconic highway king</div>
-          <div class="vehicle-tags"><span class="vehicle-tag">350cc</span><span class="vehicle-tag">Iconic</span><span class="vehicle-tag">Highway</span></div>
-          <div class="vehicle-footer">
-            <div class="vehicle-price">₹900 <span>/ day</span></div>
-            <button class="vehicle-enquire" onclick="scrollToForm()">Enquire Now</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="vehicle-card fade-in" data-type="bike">
-        <div class="vehicle-img bike-bg">🏍️</div>
-        <div class="vehicle-body">
-          <div class="vehicle-name">Royal Enfield Himalayan</div>
-          <div class="vehicle-tagline">Built for adventure</div>
-          <div class="vehicle-tags"><span class="vehicle-tag">411cc</span><span class="vehicle-tag">Off-road</span><span class="vehicle-tag">Adventure</span></div>
-          <div class="vehicle-footer">
-            <div class="vehicle-price">₹1,100 <span>/ day</span></div>
-            <button class="vehicle-enquire" onclick="scrollToForm()">Enquire Now</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="vehicle-card fade-in" data-type="bike">
-        <div class="vehicle-img bike-bg">🏍️</div>
-        <div class="vehicle-body">
-          <div class="vehicle-name">KTM Duke 200</div>
-          <div class="vehicle-tagline">Pure sporty thrill</div>
-          <div class="vehicle-tags"><span class="vehicle-tag">200cc</span><span class="vehicle-tag">Sporty</span><span class="vehicle-tag">Thrilling</span></div>
-          <div class="vehicle-footer">
-            <div class="vehicle-price">₹1,200 <span>/ day</span></div>
-            <button class="vehicle-enquire" onclick="scrollToForm()">Enquire Now</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="vehicle-card fade-in" data-type="bike">
-        <div class="vehicle-img bike-bg">🏍️</div>
-        <div class="vehicle-body">
-          <div class="vehicle-name">Bajaj Pulsar NS200</div>
-          <div class="vehicle-tagline">Performance on a budget</div>
-          <div class="vehicle-tags"><span class="vehicle-tag">200cc</span><span class="vehicle-tag">Performance</span><span class="vehicle-tag">Value</span></div>
-          <div class="vehicle-footer">
-            <div class="vehicle-price">₹800 <span>/ day</span></div>
-            <button class="vehicle-enquire" onclick="scrollToForm()">Enquire Now</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="vehicle-card fade-in" data-type="bike">
-        <div class="vehicle-img bike-bg">🏍️</div>
-        <div class="vehicle-body">
-          <div class="vehicle-name">Honda CB300R</div>
-          <div class="vehicle-tagline">Neo-retro premium ride</div>
-          <div class="vehicle-tags"><span class="vehicle-tag">300cc</span><span class="vehicle-tag">Neo-retro</span><span class="vehicle-tag">Premium</span></div>
-          <div class="vehicle-footer">
-            <div class="vehicle-price">₹1,300 <span>/ day</span></div>
-            <button class="vehicle-enquire" onclick="scrollToForm()">Enquire Now</button>
-          </div>
-        </div>
-      </div>
-
       <!-- CARS -->
-      <div class="vehicle-card fade-in" data-type="car">
+      <div class="vehicle-card fade-in" data-type="car" data-subtype="hatchback">
         <div class="vehicle-img car-bg">
           <img src="images/Maruthi Swift.png" alt="Maruti Swift">
           <div class="vehicle-badge popular">Most Popular</div>
@@ -889,7 +798,7 @@
         </div>
       </div>
 
-      <div class="vehicle-card fade-in" data-type="car">
+      <div class="vehicle-card fade-in" data-type="car" data-subtype="hatchback">
         <div class="vehicle-img car-bg">
           <img src="images/Mahindra Baleno.png" alt="Maruti Baleno">
         </div>
@@ -904,7 +813,7 @@
         </div>
       </div>
 
-      <div class="vehicle-card fade-in" data-type="car">
+      <div class="vehicle-card fade-in" data-type="car" data-subtype="hatchback">
         <div class="vehicle-img car-bg">
           <img src="images/Hyundai i20.png" alt="Hyundai i20">
         </div>
@@ -919,7 +828,7 @@
         </div>
       </div>
 
-      <div class="vehicle-card fade-in" data-type="car">
+      <div class="vehicle-card fade-in" data-type="car" data-subtype="sedan">
         <div class="vehicle-img car-bg">
           <img src="images/Maruthi Swift Dzire.png" alt="Maruti Swift Dzire">
         </div>
@@ -934,7 +843,7 @@
         </div>
       </div>
 
-      <div class="vehicle-card fade-in" data-type="car">
+      <div class="vehicle-card fade-in" data-type="car" data-subtype="hatchback">
         <div class="vehicle-img car-bg">
           <img src="images/Maruthi Fronx.png" alt="Maruti Fronx">
         </div>
@@ -949,7 +858,7 @@
         </div>
       </div>
 
-      <div class="vehicle-card fade-in" data-type="car">
+      <div class="vehicle-card fade-in" data-type="car" data-subtype="suv">
         <div class="vehicle-img suv-bg">
           <img src="images/Hyundai Venue.png" alt="Hyundai Venue">
         </div>
@@ -964,7 +873,7 @@
         </div>
       </div>
 
-      <div class="vehicle-card fade-in" data-type="car">
+      <div class="vehicle-card fade-in" data-type="car" data-subtype="suv">
         <div class="vehicle-img suv-bg">
           <img src="images/Hyundai Creta.png" alt="Hyundai Creta">
           <div class="vehicle-badge popular">Bestseller</div>
@@ -980,7 +889,7 @@
         </div>
       </div>
 
-      <div class="vehicle-card fade-in" data-type="car">
+      <div class="vehicle-card fade-in" data-type="car" data-subtype="suv">
         <div class="vehicle-img suv-bg">
           <img src="images/Mahindra Thar.png" alt="Mahindra Thar">
         </div>
@@ -995,7 +904,7 @@
         </div>
       </div>
 
-      <div class="vehicle-card fade-in" data-type="car">
+      <div class="vehicle-card fade-in" data-type="car" data-subtype="suv">
         <div class="vehicle-img suv-bg">
           <img src="images/Mahindra Thar ROXX.png" alt="Mahindra Thar ROXX">
         </div>
@@ -1010,7 +919,7 @@
         </div>
       </div>
 
-      <div class="vehicle-card fade-in" data-type="car">
+      <div class="vehicle-card fade-in" data-type="car" data-subtype="suv">
         <div class="vehicle-img suv-bg">
           <img src="images/Mahindra Scorpio.png" alt="Mahindra Scorpio">
         </div>
@@ -1025,7 +934,7 @@
         </div>
       </div>
 
-      <div class="vehicle-card fade-in" data-type="car">
+      <div class="vehicle-card fade-in" data-type="car" data-subtype="suv">
         <div class="vehicle-img suv-bg">
           <img src="images/Hyundai Alcazar.png" alt="Hyundai Alcazar">
         </div>
@@ -1040,7 +949,7 @@
         </div>
       </div>
 
-      <div class="vehicle-card fade-in" data-type="car">
+      <div class="vehicle-card fade-in" data-type="car" data-subtype="mpv">
         <div class="vehicle-img car-bg">
           <img src="images/Maruthi Ertiga.png" alt="Maruti Ertiga">
         </div>
@@ -1055,7 +964,7 @@
         </div>
       </div>
 
-      <div class="vehicle-card fade-in" data-type="car">
+      <div class="vehicle-card fade-in" data-type="car" data-subtype="mpv">
         <div class="vehicle-img car-bg">
           <img src="images/Maruthi XL6.png" alt="Maruti XL6">
         </div>
@@ -1070,7 +979,7 @@
         </div>
       </div>
 
-      <div class="vehicle-card fade-in" data-type="car">
+      <div class="vehicle-card fade-in" data-type="car" data-subtype="mpv">
         <div class="vehicle-img car-bg">
           <img src="images/Toyota Innova Crysta.png" alt="Toyota Innova Crysta">
           <div class="vehicle-badge popular">Most Booked</div>
@@ -1086,7 +995,7 @@
         </div>
       </div>
 
-      <div class="vehicle-card fade-in" data-type="car">
+      <div class="vehicle-card fade-in" data-type="car" data-subtype="mpv">
         <div class="vehicle-img car-bg">
           <img src="images/Toyota Innova HyCross.png" alt="Toyota Innova HyCross">
         </div>
@@ -1101,7 +1010,7 @@
         </div>
       </div>
 
-      <div class="vehicle-card fade-in" data-type="car">
+      <div class="vehicle-card fade-in" data-type="car" data-subtype="suv">
         <div class="vehicle-img suv-bg">
           <img src="images/Toyota Fortuner.png" alt="Toyota Fortuner">
         </div>
@@ -1349,10 +1258,10 @@
     <h2>Ready to Explore Goa? 🌴</h2>
     <p>Your perfect ride is just a message away. Book now and hit the road!</p>
     <div class="cta-btns">
-      <a href="https://wa.me/91XXXXXXXXXX?text=Hi!%20I%20want%20to%20book%20a%20vehicle%20from%20Book%20My%20Wheeler." class="btn-wa" target="_blank" rel="noopener">
+      <a href="https://wa.me/919579868810?text=Hi!%20I%20want%20to%20book%20a%20vehicle%20from%20Book%20My%20Wheeler." class="btn-wa" target="_blank" rel="noopener">
         <i class="fab fa-whatsapp" style="font-size:1.2rem;"></i> WhatsApp Us
       </a>
-      <a href="tel:+91XXXXXXXXXX" class="btn-call">
+      <a href="tel:+919579868810" class="btn-call">
         <i class="fas fa-phone"></i> Call Now
       </a>
     </div>
@@ -1372,7 +1281,7 @@
         <div class="footer-socials">
           <a href="#" class="social-icon" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
           <a href="#" class="social-icon" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-          <a href="https://wa.me/91XXXXXXXXXX" class="social-icon" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+          <a href="https://wa.me/919579868810" class="social-icon" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
         </div>
       </div>
       <div class="footer-col">
@@ -1401,11 +1310,11 @@
         <h4>Contact Us</h4>
         <div class="footer-contact-item">
           <i class="fas fa-phone"></i>
-          <span><a href="tel:+91XXXXXXXXXX" style="color:inherit;">+91 XXXXXXXXXX</a></span>
+          <span><a href="tel:+919579868810" style="color:inherit;">+91 95798 68810</a></span>
         </div>
         <div class="footer-contact-item">
           <i class="fab fa-whatsapp"></i>
-          <span><a href="https://wa.me/91XXXXXXXXXX" style="color:inherit;">+91 XXXXXXXXXX</a></span>
+          <span><a href="https://wa.me/919579868810" style="color:inherit;">+91 95798 68810</a></span>
         </div>
         <div class="footer-contact-item">
           <i class="fas fa-envelope"></i>
@@ -1425,7 +1334,7 @@
 </footer>
 
 <!-- ========== FLOATING ELEMENTS ========== -->
-<a href="https://wa.me/91XXXXXXXXXX?text=Hi!%20I%20want%20to%20book%20a%20vehicle." class="float-wa" target="_blank" rel="noopener" aria-label="WhatsApp">
+<a href="https://wa.me/919579868810?text=Hi!%20I%20want%20to%20book%20a%20vehicle." class="float-wa" target="_blank" rel="noopener" aria-label="WhatsApp">
   <i class="fab fa-whatsapp"></i>
 </a>
 <div class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">
@@ -1502,18 +1411,48 @@
   // ============================================================
   // FLEET TAB FILTER
   // ============================================================
+  const carSubtabs = document.getElementById('carSubtabs');
+
+  function applyCarSubfilter(subfilter) {
+    document.querySelectorAll('.car-subtab').forEach(t => t.classList.remove('active'));
+    document.querySelector(`.car-subtab[data-subfilter="${subfilter}"]`).classList.add('active');
+    document.querySelectorAll('.vehicle-card[data-type="car"]').forEach(card => {
+      if (subfilter === 'all' || card.dataset.subtype === subfilter) {
+        card.classList.remove('hidden');
+      } else {
+        card.classList.add('hidden');
+      }
+    });
+  }
+
   document.querySelectorAll('.fleet-tab').forEach(tab => {
     tab.addEventListener('click', function() {
       document.querySelectorAll('.fleet-tab').forEach(t => t.classList.remove('active'));
       this.classList.add('active');
       const filter = this.dataset.filter;
-      document.querySelectorAll('.vehicle-card').forEach(card => {
-        if (filter === 'all' || card.dataset.type === filter) {
-          card.classList.remove('hidden');
-        } else {
-          card.classList.add('hidden');
-        }
-      });
+      if (filter === 'car') {
+        carSubtabs.classList.add('visible');
+        applyCarSubfilter('all');
+        document.querySelectorAll('.vehicle-card').forEach(card => {
+          if (card.dataset.type !== 'car') card.classList.add('hidden');
+          else card.classList.remove('hidden');
+        });
+      } else {
+        carSubtabs.classList.remove('visible');
+        document.querySelectorAll('.vehicle-card').forEach(card => {
+          if (filter === 'all' || card.dataset.type === filter) {
+            card.classList.remove('hidden');
+          } else {
+            card.classList.add('hidden');
+          }
+        });
+      }
+    });
+  });
+
+  document.querySelectorAll('.car-subtab').forEach(btn => {
+    btn.addEventListener('click', function() {
+      applyCarSubfilter(this.dataset.subfilter);
     });
   });
 
@@ -1637,7 +1576,7 @@
       document.getElementById('pickupDate').value = today;
       document.getElementById('returnDate').value = tomorrow;
     } catch (err) {
-      showError('Something went wrong. Please call us directly at +91 XXXXXXXXXX');
+      showError('Something went wrong. Please call us directly at +91 95798 68810');
     } finally {
       btn.disabled = false;
       btn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Booking Request';
