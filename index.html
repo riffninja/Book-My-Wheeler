@@ -295,6 +295,7 @@
     .vehicle-img.bike-bg { background: linear-gradient(135deg, #e3f2fd, #bbdefb); }
     .vehicle-img.car-bg { background: linear-gradient(135deg, #e8f5e9, #c8e6c9); }
     .vehicle-img.suv-bg { background: linear-gradient(135deg, #e0f7fa, #b2ebf2); }
+    .vehicle-img img { height: 130px; width: 100%; object-fit: contain; padding: 8px; }
     .vehicle-badge {
       position: absolute; top: 12px; left: 12px;
       background: var(--primary); color: white;
@@ -736,7 +737,10 @@
 
       <!-- SCOOTERS -->
       <div class="vehicle-card fade-in" data-type="scooter">
-        <div class="vehicle-img scooter-bg">🛵<div class="vehicle-badge popular">Most Popular</div></div>
+        <div class="vehicle-img scooter-bg">
+          <img src="images/Honda Activa.png" alt="Honda Activa 6G">
+          <div class="vehicle-badge popular">Most Popular</div>
+        </div>
         <div class="vehicle-body">
           <div class="vehicle-name">Honda Activa 6G</div>
           <div class="vehicle-tagline">The all-rounder city scooter</div>
@@ -788,7 +792,9 @@
       </div>
 
       <div class="vehicle-card fade-in" data-type="scooter">
-        <div class="vehicle-img scooter-bg">🛵</div>
+        <div class="vehicle-img scooter-bg">
+          <img src="images/Yamaha Fascino.png" alt="Yamaha Fascino">
+        </div>
         <div class="vehicle-body">
           <div class="vehicle-name">Yamaha Fascino</div>
           <div class="vehicle-tagline">Trendy & smooth</div>
@@ -868,11 +874,14 @@
 
       <!-- CARS -->
       <div class="vehicle-card fade-in" data-type="car">
-        <div class="vehicle-img car-bg">🚗</div>
+        <div class="vehicle-img car-bg">
+          <img src="images/Maruthi Swift.png" alt="Maruti Swift">
+          <div class="vehicle-badge popular">Most Popular</div>
+        </div>
         <div class="vehicle-body">
-          <div class="vehicle-name">Maruti Celerio</div>
-          <div class="vehicle-tagline">Compact city cruiser</div>
-          <div class="vehicle-tags"><span class="vehicle-tag">Hatchback</span><span class="vehicle-tag">Fuel Saver</span><span class="vehicle-tag">AMT Option</span></div>
+          <div class="vehicle-name">Maruti Swift</div>
+          <div class="vehicle-tagline">Fun compact hatchback</div>
+          <div class="vehicle-tags"><span class="vehicle-tag">Hatchback</span><span class="vehicle-tag">Fuel Saver</span><span class="vehicle-tag">5-Seater</span></div>
           <div class="vehicle-footer">
             <div class="vehicle-price">₹1,200 <span>/ day</span></div>
             <button class="vehicle-enquire" onclick="scrollToForm()">Enquire Now</button>
@@ -881,20 +890,24 @@
       </div>
 
       <div class="vehicle-card fade-in" data-type="car">
-        <div class="vehicle-img car-bg">🚗</div>
+        <div class="vehicle-img car-bg">
+          <img src="images/Mahindra Baleno.png" alt="Maruti Baleno">
+        </div>
         <div class="vehicle-body">
-          <div class="vehicle-name">Maruti Swift Dzire</div>
-          <div class="vehicle-tagline">Elegant family sedan</div>
-          <div class="vehicle-tags"><span class="vehicle-tag">Sedan</span><span class="vehicle-tag">Comfortable</span><span class="vehicle-tag">5-Seater</span></div>
+          <div class="vehicle-name">Maruti Baleno</div>
+          <div class="vehicle-tagline">Premium spacious hatchback</div>
+          <div class="vehicle-tags"><span class="vehicle-tag">Hatchback</span><span class="vehicle-tag">Premium</span><span class="vehicle-tag">Spacious</span></div>
           <div class="vehicle-footer">
-            <div class="vehicle-price">₹1,400 <span>/ day</span></div>
+            <div class="vehicle-price">₹1,200 <span>/ day</span></div>
             <button class="vehicle-enquire" onclick="scrollToForm()">Enquire Now</button>
           </div>
         </div>
       </div>
 
       <div class="vehicle-card fade-in" data-type="car">
-        <div class="vehicle-img car-bg">🚗</div>
+        <div class="vehicle-img car-bg">
+          <img src="images/Hyundai i20.png" alt="Hyundai i20">
+        </div>
         <div class="vehicle-body">
           <div class="vehicle-name">Hyundai i20</div>
           <div class="vehicle-tagline">Premium hatchback experience</div>
@@ -907,11 +920,59 @@
       </div>
 
       <div class="vehicle-card fade-in" data-type="car">
-        <div class="vehicle-img suv-bg">🚙</div>
+        <div class="vehicle-img car-bg">
+          <img src="images/Maruthi Swift Dzire.png" alt="Maruti Swift Dzire">
+        </div>
         <div class="vehicle-body">
-          <div class="vehicle-name">Tata Nexon</div>
-          <div class="vehicle-tagline">Safe, spacious compact SUV</div>
-          <div class="vehicle-tags"><span class="vehicle-tag">SUV</span><span class="vehicle-tag">5-Star Safety</span><span class="vehicle-tag">Spacious</span></div>
+          <div class="vehicle-name">Maruti Swift Dzire</div>
+          <div class="vehicle-tagline">Elegant family sedan</div>
+          <div class="vehicle-tags"><span class="vehicle-tag">Sedan</span><span class="vehicle-tag">Comfortable</span><span class="vehicle-tag">5-Seater</span></div>
+          <div class="vehicle-footer">
+            <div class="vehicle-price">₹1,400 <span>/ day</span></div>
+            <button class="vehicle-enquire" onclick="scrollToForm()">Enquire Now</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="vehicle-card fade-in" data-type="car">
+        <div class="vehicle-img car-bg">
+          <img src="images/Maruthi Fronx.png" alt="Maruti Fronx">
+        </div>
+        <div class="vehicle-body">
+          <div class="vehicle-name">Maruti Fronx</div>
+          <div class="vehicle-tagline">Sporty compact crossover</div>
+          <div class="vehicle-tags"><span class="vehicle-tag">Crossover</span><span class="vehicle-tag">Sporty</span><span class="vehicle-tag">Turbo</span></div>
+          <div class="vehicle-footer">
+            <div class="vehicle-price">₹1,600 <span>/ day</span></div>
+            <button class="vehicle-enquire" onclick="scrollToForm()">Enquire Now</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="vehicle-card fade-in" data-type="car">
+        <div class="vehicle-img suv-bg">
+          <img src="images/Hyundai Venue.png" alt="Hyundai Venue">
+        </div>
+        <div class="vehicle-body">
+          <div class="vehicle-name">Hyundai Venue</div>
+          <div class="vehicle-tagline">Smart compact SUV</div>
+          <div class="vehicle-tags"><span class="vehicle-tag">SUV</span><span class="vehicle-tag">Connected Car</span><span class="vehicle-tag">5-Seater</span></div>
+          <div class="vehicle-footer">
+            <div class="vehicle-price">₹1,800 <span>/ day</span></div>
+            <button class="vehicle-enquire" onclick="scrollToForm()">Enquire Now</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="vehicle-card fade-in" data-type="car">
+        <div class="vehicle-img suv-bg">
+          <img src="images/Hyundai Creta.png" alt="Hyundai Creta">
+          <div class="vehicle-badge popular">Bestseller</div>
+        </div>
+        <div class="vehicle-body">
+          <div class="vehicle-name">Hyundai Creta</div>
+          <div class="vehicle-tagline">India's favourite mid-size SUV</div>
+          <div class="vehicle-tags"><span class="vehicle-tag">SUV</span><span class="vehicle-tag">Panoramic Roof</span><span class="vehicle-tag">5-Seater</span></div>
           <div class="vehicle-footer">
             <div class="vehicle-price">₹2,000 <span>/ day</span></div>
             <button class="vehicle-enquire" onclick="scrollToForm()">Enquire Now</button>
@@ -920,13 +981,136 @@
       </div>
 
       <div class="vehicle-card fade-in" data-type="car">
-        <div class="vehicle-img suv-bg">🚐</div>
+        <div class="vehicle-img suv-bg">
+          <img src="images/Mahindra Thar.png" alt="Mahindra Thar">
+        </div>
+        <div class="vehicle-body">
+          <div class="vehicle-name">Mahindra Thar</div>
+          <div class="vehicle-tagline">The iconic off-roader</div>
+          <div class="vehicle-tags"><span class="vehicle-tag">Off-road</span><span class="vehicle-tag">4x4</span><span class="vehicle-tag">Iconic</span></div>
+          <div class="vehicle-footer">
+            <div class="vehicle-price">₹2,200 <span>/ day</span></div>
+            <button class="vehicle-enquire" onclick="scrollToForm()">Enquire Now</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="vehicle-card fade-in" data-type="car">
+        <div class="vehicle-img suv-bg">
+          <img src="images/Mahindra Thar ROXX.png" alt="Mahindra Thar ROXX">
+        </div>
+        <div class="vehicle-body">
+          <div class="vehicle-name">Mahindra Thar ROXX</div>
+          <div class="vehicle-tagline">Thar taken to the next level</div>
+          <div class="vehicle-tags"><span class="vehicle-tag">Off-road</span><span class="vehicle-tag">4x4</span><span class="vehicle-tag">5-Door</span></div>
+          <div class="vehicle-footer">
+            <div class="vehicle-price">₹2,500 <span>/ day</span></div>
+            <button class="vehicle-enquire" onclick="scrollToForm()">Enquire Now</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="vehicle-card fade-in" data-type="car">
+        <div class="vehicle-img suv-bg">
+          <img src="images/Mahindra Scorpio.png" alt="Mahindra Scorpio">
+        </div>
+        <div class="vehicle-body">
+          <div class="vehicle-name">Mahindra Scorpio</div>
+          <div class="vehicle-tagline">Commanding road presence</div>
+          <div class="vehicle-tags"><span class="vehicle-tag">SUV</span><span class="vehicle-tag">7-Seater</span><span class="vehicle-tag">Bold</span></div>
+          <div class="vehicle-footer">
+            <div class="vehicle-price">₹2,500 <span>/ day</span></div>
+            <button class="vehicle-enquire" onclick="scrollToForm()">Enquire Now</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="vehicle-card fade-in" data-type="car">
+        <div class="vehicle-img suv-bg">
+          <img src="images/Hyundai Alcazar.png" alt="Hyundai Alcazar">
+        </div>
+        <div class="vehicle-body">
+          <div class="vehicle-name">Hyundai Alcazar</div>
+          <div class="vehicle-tagline">Premium 6-seater SUV</div>
+          <div class="vehicle-tags"><span class="vehicle-tag">SUV</span><span class="vehicle-tag">6-Seater</span><span class="vehicle-tag">Premium</span></div>
+          <div class="vehicle-footer">
+            <div class="vehicle-price">₹2,800 <span>/ day</span></div>
+            <button class="vehicle-enquire" onclick="scrollToForm()">Enquire Now</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="vehicle-card fade-in" data-type="car">
+        <div class="vehicle-img car-bg">
+          <img src="images/Maruthi Ertiga.png" alt="Maruti Ertiga">
+        </div>
+        <div class="vehicle-body">
+          <div class="vehicle-name">Maruti Ertiga</div>
+          <div class="vehicle-tagline">Spacious family MPV</div>
+          <div class="vehicle-tags"><span class="vehicle-tag">MPV</span><span class="vehicle-tag">7-Seater</span><span class="vehicle-tag">Family</span></div>
+          <div class="vehicle-footer">
+            <div class="vehicle-price">₹2,000 <span>/ day</span></div>
+            <button class="vehicle-enquire" onclick="scrollToForm()">Enquire Now</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="vehicle-card fade-in" data-type="car">
+        <div class="vehicle-img car-bg">
+          <img src="images/Maruthi XL6.png" alt="Maruti XL6">
+        </div>
+        <div class="vehicle-body">
+          <div class="vehicle-name">Maruti XL6</div>
+          <div class="vehicle-tagline">Premium 6-seater MPV</div>
+          <div class="vehicle-tags"><span class="vehicle-tag">MPV</span><span class="vehicle-tag">6-Seater</span><span class="vehicle-tag">Premium</span></div>
+          <div class="vehicle-footer">
+            <div class="vehicle-price">₹2,200 <span>/ day</span></div>
+            <button class="vehicle-enquire" onclick="scrollToForm()">Enquire Now</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="vehicle-card fade-in" data-type="car">
+        <div class="vehicle-img car-bg">
+          <img src="images/Toyota Innova Crysta.png" alt="Toyota Innova Crysta">
+          <div class="vehicle-badge popular">Most Booked</div>
+        </div>
         <div class="vehicle-body">
           <div class="vehicle-name">Toyota Innova Crysta</div>
           <div class="vehicle-tagline">Perfect for group travel</div>
           <div class="vehicle-tags"><span class="vehicle-tag">7-Seater</span><span class="vehicle-tag">Premium</span><span class="vehicle-tag">Group Travel</span></div>
           <div class="vehicle-footer">
             <div class="vehicle-price">₹3,500 <span>/ day</span></div>
+            <button class="vehicle-enquire" onclick="scrollToForm()">Enquire Now</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="vehicle-card fade-in" data-type="car">
+        <div class="vehicle-img car-bg">
+          <img src="images/Toyota Innova HyCross.png" alt="Toyota Innova HyCross">
+        </div>
+        <div class="vehicle-body">
+          <div class="vehicle-name">Toyota Innova HyCross</div>
+          <div class="vehicle-tagline">Hybrid luxury MPV</div>
+          <div class="vehicle-tags"><span class="vehicle-tag">7-Seater</span><span class="vehicle-tag">Hybrid</span><span class="vehicle-tag">Luxury</span></div>
+          <div class="vehicle-footer">
+            <div class="vehicle-price">₹3,800 <span>/ day</span></div>
+            <button class="vehicle-enquire" onclick="scrollToForm()">Enquire Now</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="vehicle-card fade-in" data-type="car">
+        <div class="vehicle-img suv-bg">
+          <img src="images/Toyota Fortuner.png" alt="Toyota Fortuner">
+        </div>
+        <div class="vehicle-body">
+          <div class="vehicle-name">Toyota Fortuner</div>
+          <div class="vehicle-tagline">The ultimate road warrior</div>
+          <div class="vehicle-tags"><span class="vehicle-tag">SUV</span><span class="vehicle-tag">7-Seater</span><span class="vehicle-tag">Luxury</span></div>
+          <div class="vehicle-footer">
+            <div class="vehicle-price">₹4,000 <span>/ day</span></div>
             <button class="vehicle-enquire" onclick="scrollToForm()">Enquire Now</button>
           </div>
         </div>
