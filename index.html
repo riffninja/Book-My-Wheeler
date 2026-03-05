@@ -134,7 +134,7 @@
     .hero::before {
       content: '';
       position: absolute; inset: 0;
-      background: rgba(0, 20, 45, 0.58);
+      background: rgba(0, 20, 45, 0.42);
     }
     /* Animated dots pattern */
     .hero::after {
@@ -198,7 +198,7 @@
       font-size: 1.35rem; font-weight: 800; color: var(--charcoal);
       display: flex; align-items: center; gap: 10px; margin-bottom: 4px;
     }
-    .form-card-sub { font-size: 13px; color: var(--slate); margin-bottom: 20px; }
+    .form-card-sub { font-size: 13.5px; color: var(--slate); margin-bottom: 20px; }
     .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
     .form-group { position: relative; }
     .form-group.full { grid-column: 1 / -1; }
@@ -225,7 +225,7 @@
     .btn-submit:hover { background: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(255,122,33,0.45); }
     .btn-submit:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
     .form-assurance { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
-    .assurance-item { display: flex; align-items: center; gap: 5px; font-size: 11.5px; color: var(--slate); }
+    .assurance-item { display: flex; align-items: center; gap: 5px; font-size: 12px; color: var(--slate); }
     .assurance-item i { color: var(--success); font-size: 12px; }
     .form-error { display: none; background: #fee2e2; color: var(--error); font-size: 13px; padding: 10px 14px; border-radius: var(--radius); margin-top: 8px; border: 1px solid rgba(220,38,38,0.2); }
     .form-error.show { display: flex; align-items: center; gap: 8px; }
@@ -276,6 +276,14 @@
       cursor: pointer; transition: var(--transition);
     }
     .fleet-tab.active, .fleet-tab:hover { background: var(--navy); border-color: var(--navy); color: white; }
+    .fleet-sort { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+    .fleet-sort span { font-size: 13px; font-weight: 600; color: var(--slate); margin-right: 4px; }
+    .sort-btn {
+      padding: 7px 16px; border-radius: 20px; border: 1.5px solid var(--light-grey);
+      background: white; color: var(--slate); font-size: 13px; font-weight: 600;
+      cursor: pointer; transition: var(--transition);
+    }
+    .sort-btn.active, .sort-btn:hover { background: var(--primary); border-color: var(--primary); color: white; }
     .car-subtabs { display: none; gap: 8px; flex-wrap: wrap; margin-bottom: 28px; }
     .car-subtabs.visible { display: flex; }
     .car-subtab {
@@ -305,13 +313,13 @@
     .vehicle-badge {
       position: absolute; top: 12px; left: 12px;
       background: var(--primary); color: white;
-      font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 20px;
+      font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 20px;
       text-transform: uppercase; letter-spacing: 0.5px;
     }
     .vehicle-badge.popular { background: var(--palm-green); }
     .vehicle-body { padding: 18px; }
     .vehicle-name { font-size: 1rem; font-weight: 700; color: var(--charcoal); margin-bottom: 4px; }
-    .vehicle-tagline { font-size: 12.5px; color: var(--slate); margin-bottom: 12px; }
+    .vehicle-tagline { font-size: 13px; color: var(--slate); margin-bottom: 12px; }
     .vehicle-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
     .vehicle-tag { font-size: 11.5px; background: var(--gray-100); color: var(--slate); padding: 4px 10px; border-radius: 6px; font-weight: 500; }
     .vehicle-footer { display: flex; align-items: center; justify-content: space-between; }
@@ -343,20 +351,9 @@
     ============================================================ */
     .steps-wrap { margin-top: 56px; position: relative; }
     .steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; position: relative; }
-    .steps-grid::before {
-      content: '';
-      position: absolute; top: 40px; left: calc(16.66% + 20px); right: calc(16.66% + 20px);
-      height: 2px; border-top: 2px dashed var(--light-grey); z-index: 0;
-    }
     .step-card { text-align: center; position: relative; z-index: 1; }
-    .step-num {
-      width: 80px; height: 80px; border-radius: 50%;
-      background: var(--navy);
-      color: white; font-family: 'Poppins', sans-serif; font-size: 1.8rem; font-weight: 800;
-      display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;
-      box-shadow: 0 8px 24px rgba(0,119,182,0.30);
-    }
-    .step-icon { font-size: 2rem; margin-bottom: 12px; }
+    .step-label { font-size: 12px; font-weight: 600; color: var(--slate); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
+    .step-icon { font-size: 3rem; margin-bottom: 16px; }
     .step-title { font-size: 1.1rem; font-weight: 700; color: var(--charcoal); margin-bottom: 10px; }
     .step-desc { font-size: 14px; color: var(--slate); line-height: 1.65; max-width: 220px; margin: 0 auto; }
 
@@ -381,24 +378,55 @@
     .location-pill:hover i { color: white; }
 
     /* ============================================================
-       TESTIMONIALS
+       TESTIMONIALS CAROUSEL
     ============================================================ */
     .testimonials-section { background: var(--sand-beige); }
-    .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 48px; }
+    .testimonials-carousel-wrap { position: relative; margin-top: 48px; }
+    .testimonials-carousel { overflow: hidden; }
+    .testimonials-track {
+      display: flex; gap: 24px;
+      transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      will-change: transform;
+    }
     .testimonial-card {
       background: white; border-radius: var(--radius-lg); padding: 28px;
-      border: 1.5px solid var(--light-grey); transition: var(--transition);
+      border: 1.5px solid var(--light-grey); transition: box-shadow 0.3s, border-color 0.3s;
+      min-width: calc(33.333% - 16px); flex-shrink: 0;
     }
-    .testimonial-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
-    .t-stars { color: #FACC15; font-size: 16px; margin-bottom: 14px; }
+    .testimonial-card:hover { box-shadow: var(--shadow-lg); border-color: var(--navy); }
+    .t-stars { font-size: 16px; margin-bottom: 14px; }
     .t-quote { font-size: 15px; color: var(--slate); line-height: 1.7; margin-bottom: 20px; font-style: italic; }
     .t-author { display: flex; align-items: center; gap: 12px; }
     .t-avatar { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; font-weight: 700; color: white; flex-shrink: 0; }
     .t-avatar.a1 { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); }
     .t-avatar.a2 { background: linear-gradient(135deg, var(--navy), var(--navy-light)); }
     .t-avatar.a3 { background: linear-gradient(135deg, var(--teal), #009e88); }
+    .t-avatar.a4 { background: linear-gradient(135deg, #7C3AED, #5B21B6); }
+    .t-avatar.a5 { background: linear-gradient(135deg, #DB2777, #9D174D); }
+    .t-avatar.a6 { background: linear-gradient(135deg, #D97706, #92400E); }
     .t-name { font-weight: 700; color: var(--charcoal); font-size: 14px; }
-    .t-from { font-size: 12.5px; color: var(--slate); margin-top: 2px; }
+    .t-from { font-size: 13px; color: var(--slate); margin-top: 2px; }
+    /* Carousel controls */
+    .carousel-controls { display: flex; align-items: center; justify-content: center; gap: 16px; margin-top: 28px; }
+    .carousel-btn {
+      width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--navy);
+      background: white; color: var(--navy); font-size: 14px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: var(--transition); flex-shrink: 0;
+    }
+    .carousel-btn:hover { background: var(--navy); color: white; }
+    .carousel-dots { display: flex; gap: 8px; }
+    .carousel-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--light-grey); cursor: pointer; transition: var(--transition);
+    }
+    .carousel-dot.active { background: var(--navy); transform: scale(1.3); }
+    @media (max-width: 768px) {
+      .testimonial-card { min-width: calc(100% - 0px); }
+    }
+    @media (min-width: 769px) and (max-width: 1024px) {
+      .testimonial-card { min-width: calc(50% - 12px); }
+    }
 
     /* ============================================================
        FAQ
@@ -506,10 +534,10 @@
       .features-grid { grid-template-columns: 1fr 1fr; }
       .steps-grid { grid-template-columns: 1fr; gap: 32px; }
       .steps-grid::before { display: none; }
-      .testimonials-grid { grid-template-columns: 1fr; }
+      .testimonial-card { min-width: 100%; }
       .footer-grid { grid-template-columns: 1fr 1fr; }
       .form-grid { grid-template-columns: 1fr; }
-      .hero-bullets { flex-direction: column; }
+      .hero-bullets { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
     }
     @media (max-width: 480px) {
       .fleet-grid { grid-template-columns: 1fr; }
@@ -592,6 +620,10 @@
           <div class="hero-bullet"><i class="fas fa-check-circle"></i> No Hidden Charges</div>
           <div class="hero-bullet"><i class="fas fa-check-circle"></i> 24/7 Support</div>
           <div class="hero-bullet"><i class="fas fa-check-circle"></i> Free Cancellation</div>
+        </div>
+        <div class="hero-cta-row" style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:32px;">
+          <button class="btn btn-primary" onclick="scrollToForm()"><i class="fas fa-motorcycle"></i> Book Your Ride</button>
+          <a href="#fleet" class="btn btn-outline">Browse Fleet <i class="fas fa-arrow-right"></i></a>
         </div>
         <div class="hero-scroll">
           <div class="scroll-anim"></div>
@@ -714,7 +746,7 @@
     <div class="stats-grid">
       <div class="stat-item fade-in">
         <div class="stat-number"><span class="counter" data-target="500">0</span><span class="stat-plus">+</span></div>
-        <div class="stat-label">Vehicles in Fleet</div>
+        <div class="stat-label">Happy Bookings</div>
       </div>
       <div class="stat-item fade-in">
         <div class="stat-number"><span class="counter" data-target="10000">0</span><span class="stat-plus">+</span></div>
@@ -745,6 +777,13 @@
       <button class="fleet-tab" data-filter="scooter">🛵 Scooters</button>
       <button class="fleet-tab" data-filter="car">🚗 Cars</button>
     </div>
+    <div class="fleet-sort">
+      <span>Sort by:</span>
+      <button class="sort-btn active" data-sort="default">Default</button>
+      <button class="sort-btn" data-sort="low-high">₹ Low → High</button>
+      <button class="sort-btn" data-sort="high-low">₹ High → Low</button>
+      <button class="sort-btn" data-sort="popular">Most Popular</button>
+    </div>
     <div class="car-subtabs" id="carSubtabs">
       <button class="car-subtab active" data-subfilter="all">All Cars</button>
       <button class="car-subtab" data-subfilter="hatchback">Hatchback</button>
@@ -757,7 +796,7 @@
       <!-- SCOOTERS -->
       <div class="vehicle-card fade-in" data-type="scooter">
         <div class="vehicle-img scooter-bg">
-          <img src="images/Honda Activa.png" alt="Honda Activa 6G">
+          <img src="images/Honda Activa.png" alt="Honda Activa 6G" loading="lazy">
           <div class="vehicle-badge popular">Most Popular</div>
         </div>
         <div class="vehicle-body">
@@ -773,7 +812,7 @@
 
       <div class="vehicle-card fade-in" data-type="scooter">
         <div class="vehicle-img scooter-bg">
-          <img src="images/Yamaha Fascino.png" alt="Yamaha Fascino">
+          <img src="images/Yamaha Fascino.png" alt="Yamaha Fascino" loading="lazy">
         </div>
         <div class="vehicle-body">
           <div class="vehicle-name">Yamaha Fascino</div>
@@ -789,7 +828,7 @@
       <!-- CARS -->
       <div class="vehicle-card fade-in" data-type="car" data-subtype="hatchback">
         <div class="vehicle-img car-bg">
-          <img src="images/Maruthi Swift.png" alt="Maruti Swift">
+          <img src="images/Maruthi Swift.png" alt="Maruti Swift" loading="lazy">
           <div class="vehicle-badge popular">Most Popular</div>
         </div>
         <div class="vehicle-body">
@@ -805,7 +844,7 @@
 
       <div class="vehicle-card fade-in" data-type="car" data-subtype="hatchback">
         <div class="vehicle-img car-bg">
-          <img src="images/Mahindra Baleno.png" alt="Maruti Baleno">
+          <img src="images/Mahindra Baleno.png" alt="Maruti Baleno" loading="lazy">
         </div>
         <div class="vehicle-body">
           <div class="vehicle-name">Maruti Baleno</div>
@@ -820,7 +859,7 @@
 
       <div class="vehicle-card fade-in" data-type="car" data-subtype="hatchback">
         <div class="vehicle-img car-bg">
-          <img src="images/Hyundai i20.png" alt="Hyundai i20">
+          <img src="images/Hyundai i20.png" alt="Hyundai i20" loading="lazy">
         </div>
         <div class="vehicle-body">
           <div class="vehicle-name">Hyundai i20</div>
@@ -835,7 +874,7 @@
 
       <div class="vehicle-card fade-in" data-type="car" data-subtype="sedan">
         <div class="vehicle-img car-bg">
-          <img src="images/Maruthi Swift Dzire.png" alt="Maruti Swift Dzire">
+          <img src="images/Maruthi Swift Dzire.png" alt="Maruti Swift Dzire" loading="lazy">
         </div>
         <div class="vehicle-body">
           <div class="vehicle-name">Maruti Swift Dzire</div>
@@ -850,12 +889,12 @@
 
       <div class="vehicle-card fade-in" data-type="car" data-subtype="hatchback">
         <div class="vehicle-img car-bg">
-          <img src="images/Maruthi Fronx.png" alt="Maruti Fronx">
+          <img src="images/Maruthi Fronx.png" alt="Maruti Fronx" loading="lazy">
         </div>
         <div class="vehicle-body">
           <div class="vehicle-name">Maruti Fronx</div>
           <div class="vehicle-tagline">Sporty compact crossover</div>
-          <div class="vehicle-tags"><span class="vehicle-tag">Crossover</span><span class="vehicle-tag">Sporty</span><span class="vehicle-tag">Turbo</span></div>
+          <div class="vehicle-tags"><span class="vehicle-tag">Hatchback</span><span class="vehicle-tag">Sporty</span><span class="vehicle-tag">Turbo</span></div>
           <div class="vehicle-footer">
             <div class="vehicle-price">₹1,600 <span>/ day</span></div>
             <button class="vehicle-enquire" onclick="scrollToForm()">Enquire Now</button>
@@ -865,7 +904,7 @@
 
       <div class="vehicle-card fade-in" data-type="car" data-subtype="suv">
         <div class="vehicle-img suv-bg">
-          <img src="images/Hyundai Venue.png" alt="Hyundai Venue">
+          <img src="images/Hyundai Venue.png" alt="Hyundai Venue" loading="lazy">
         </div>
         <div class="vehicle-body">
           <div class="vehicle-name">Hyundai Venue</div>
@@ -880,8 +919,8 @@
 
       <div class="vehicle-card fade-in" data-type="car" data-subtype="suv">
         <div class="vehicle-img suv-bg">
-          <img src="images/Hyundai Creta.png" alt="Hyundai Creta">
-          <div class="vehicle-badge popular">Bestseller</div>
+          <img src="images/Hyundai Creta.png" alt="Hyundai Creta" loading="lazy">
+          <div class="vehicle-badge popular">Most Popular</div>
         </div>
         <div class="vehicle-body">
           <div class="vehicle-name">Hyundai Creta</div>
@@ -896,7 +935,7 @@
 
       <div class="vehicle-card fade-in" data-type="car" data-subtype="suv">
         <div class="vehicle-img suv-bg">
-          <img src="images/Mahindra Thar.png" alt="Mahindra Thar">
+          <img src="images/Mahindra Thar.png" alt="Mahindra Thar" loading="lazy">
         </div>
         <div class="vehicle-body">
           <div class="vehicle-name">Mahindra Thar</div>
@@ -911,7 +950,7 @@
 
       <div class="vehicle-card fade-in" data-type="car" data-subtype="suv">
         <div class="vehicle-img suv-bg">
-          <img src="images/Mahindra Thar ROXX.png" alt="Mahindra Thar ROXX">
+          <img src="images/Mahindra Thar ROXX.png" alt="Mahindra Thar ROXX" loading="lazy">
         </div>
         <div class="vehicle-body">
           <div class="vehicle-name">Mahindra Thar ROXX</div>
@@ -926,7 +965,7 @@
 
       <div class="vehicle-card fade-in" data-type="car" data-subtype="suv">
         <div class="vehicle-img suv-bg">
-          <img src="images/Mahindra Scorpio.png" alt="Mahindra Scorpio">
+          <img src="images/Mahindra Scorpio.png" alt="Mahindra Scorpio" loading="lazy">
         </div>
         <div class="vehicle-body">
           <div class="vehicle-name">Mahindra Scorpio</div>
@@ -941,7 +980,7 @@
 
       <div class="vehicle-card fade-in" data-type="car" data-subtype="suv">
         <div class="vehicle-img suv-bg">
-          <img src="images/Hyundai Alcazar.png" alt="Hyundai Alcazar">
+          <img src="images/Hyundai Alcazar.png" alt="Hyundai Alcazar" loading="lazy">
         </div>
         <div class="vehicle-body">
           <div class="vehicle-name">Hyundai Alcazar</div>
@@ -956,7 +995,7 @@
 
       <div class="vehicle-card fade-in" data-type="car" data-subtype="mpv">
         <div class="vehicle-img car-bg">
-          <img src="images/Maruthi Ertiga.png" alt="Maruti Ertiga">
+          <img src="images/Maruthi Ertiga.png" alt="Maruti Ertiga" loading="lazy">
         </div>
         <div class="vehicle-body">
           <div class="vehicle-name">Maruti Ertiga</div>
@@ -971,7 +1010,7 @@
 
       <div class="vehicle-card fade-in" data-type="car" data-subtype="mpv">
         <div class="vehicle-img car-bg">
-          <img src="images/Maruthi XL6.png" alt="Maruti XL6">
+          <img src="images/Maruthi XL6.png" alt="Maruti XL6" loading="lazy">
         </div>
         <div class="vehicle-body">
           <div class="vehicle-name">Maruti XL6</div>
@@ -986,8 +1025,8 @@
 
       <div class="vehicle-card fade-in" data-type="car" data-subtype="mpv">
         <div class="vehicle-img car-bg">
-          <img src="images/Toyota Innova Crysta.png" alt="Toyota Innova Crysta">
-          <div class="vehicle-badge popular">Most Booked</div>
+          <img src="images/Toyota Innova Crysta.png" alt="Toyota Innova Crysta" loading="lazy">
+          <div class="vehicle-badge popular">Most Popular</div>
         </div>
         <div class="vehicle-body">
           <div class="vehicle-name">Toyota Innova Crysta</div>
@@ -1002,7 +1041,7 @@
 
       <div class="vehicle-card fade-in" data-type="car" data-subtype="mpv">
         <div class="vehicle-img car-bg">
-          <img src="images/Toyota Innova HyCross.png" alt="Toyota Innova HyCross">
+          <img src="images/Toyota Innova HyCross.png" alt="Toyota Innova HyCross" loading="lazy">
         </div>
         <div class="vehicle-body">
           <div class="vehicle-name">Toyota Innova HyCross</div>
@@ -1017,7 +1056,7 @@
 
       <div class="vehicle-card fade-in" data-type="car" data-subtype="suv">
         <div class="vehicle-img suv-bg">
-          <img src="images/Toyota Fortuner.png" alt="Toyota Fortuner">
+          <img src="images/Toyota Fortuner.png" alt="Toyota Fortuner" loading="lazy">
         </div>
         <div class="vehicle-body">
           <div class="vehicle-name">Toyota Fortuner</div>
@@ -1038,7 +1077,7 @@
 <section class="section why-section" id="why-us">
   <div class="container">
     <div class="fade-in" style="text-align:center;">
-      <span class="section-tag">Why Choose Us</span>
+      <span class="section-tag">Our Advantage</span>
       <h2 class="section-title">Why Book With Us?</h2>
       <p class="section-sub" style="margin:0 auto;">We go beyond just renting vehicles — we make your Goa experience unforgettable.</p>
     </div>
@@ -1088,19 +1127,19 @@
     <div class="steps-wrap">
       <div class="steps-grid">
         <div class="step-card fade-in">
-          <div class="step-num">1</div>
+          <div class="step-label">Step 1</div>
           <div class="step-icon">📋</div>
           <div class="step-title">Fill the Form</div>
           <div class="step-desc">Share your ride preferences — vehicle type, location, and dates — using the quick booking form above.</div>
         </div>
         <div class="step-card fade-in">
-          <div class="step-num">2</div>
+          <div class="step-label">Step 2</div>
           <div class="step-icon">📞</div>
           <div class="step-title">Get Confirmation Call</div>
           <div class="step-desc">Our team calls you back within 30 minutes to confirm availability, pricing, and all the details.</div>
         </div>
         <div class="step-card fade-in">
-          <div class="step-num">3</div>
+          <div class="step-label">Step 3</div>
           <div class="step-icon">🏖️</div>
           <div class="step-title">Receive & Ride</div>
           <div class="step-desc">We deliver the vehicle to your doorstep. Pick up the keys and hit Goa's beautiful roads — your way!</div>
@@ -1121,33 +1160,33 @@
     <div class="locations-group">
       <div class="locations-group-title"><i class="fas fa-sun" style="margin-right:8px;"></i>North Goa</div>
       <div class="locations-grid">
-        <div class="location-pill"><i class="fas fa-map-marker-alt"></i> Panaji</div>
-        <div class="location-pill"><i class="fas fa-map-marker-alt"></i> Calangute</div>
-        <div class="location-pill"><i class="fas fa-map-marker-alt"></i> Baga</div>
-        <div class="location-pill"><i class="fas fa-map-marker-alt"></i> Anjuna</div>
-        <div class="location-pill"><i class="fas fa-map-marker-alt"></i> Vagator</div>
-        <div class="location-pill"><i class="fas fa-map-marker-alt"></i> Mapusa</div>
-        <div class="location-pill"><i class="fas fa-map-marker-alt"></i> Morjim</div>
-        <div class="location-pill"><i class="fas fa-map-marker-alt"></i> Arambol</div>
-        <div class="location-pill"><i class="fas fa-map-marker-alt"></i> Candolim</div>
-        <div class="location-pill"><i class="fas fa-map-marker-alt"></i> Sinquerim</div>
+        <div class="location-pill" onclick="selectLocation('Panaji')"><i class="fas fa-map-marker-alt"></i> Panaji</div>
+        <div class="location-pill" onclick="selectLocation('Calangute')"><i class="fas fa-map-marker-alt"></i> Calangute</div>
+        <div class="location-pill" onclick="selectLocation('Baga')"><i class="fas fa-map-marker-alt"></i> Baga</div>
+        <div class="location-pill" onclick="selectLocation('Anjuna')"><i class="fas fa-map-marker-alt"></i> Anjuna</div>
+        <div class="location-pill" onclick="selectLocation('Vagator')"><i class="fas fa-map-marker-alt"></i> Vagator</div>
+        <div class="location-pill" onclick="selectLocation('Mapusa')"><i class="fas fa-map-marker-alt"></i> Mapusa</div>
+        <div class="location-pill" onclick="selectLocation('Morjim')"><i class="fas fa-map-marker-alt"></i> Morjim</div>
+        <div class="location-pill" onclick="selectLocation('Arambol')"><i class="fas fa-map-marker-alt"></i> Arambol</div>
+        <div class="location-pill" onclick="selectLocation('Candolim')"><i class="fas fa-map-marker-alt"></i> Candolim</div>
+        <div class="location-pill" onclick="selectLocation('Sinquerim')"><i class="fas fa-map-marker-alt"></i> Sinquerim</div>
       </div>
       <div class="locations-group-title"><i class="fas fa-umbrella-beach" style="margin-right:8px;"></i>South Goa</div>
       <div class="locations-grid">
-        <div class="location-pill"><i class="fas fa-map-marker-alt"></i> Madgaon (Margao)</div>
-        <div class="location-pill"><i class="fas fa-map-marker-alt"></i> Palolem</div>
-        <div class="location-pill"><i class="fas fa-map-marker-alt"></i> Colva</div>
-        <div class="location-pill"><i class="fas fa-map-marker-alt"></i> Vasco da Gama</div>
-        <div class="location-pill"><i class="fas fa-map-marker-alt"></i> Benaulim</div>
-        <div class="location-pill"><i class="fas fa-map-marker-alt"></i> Cavelossim</div>
-        <div class="location-pill"><i class="fas fa-map-marker-alt"></i> Agonda</div>
+        <div class="location-pill" onclick="selectLocation('Madgaon (Margao)')"><i class="fas fa-map-marker-alt"></i> Madgaon (Margao)</div>
+        <div class="location-pill" onclick="selectLocation('Palolem')"><i class="fas fa-map-marker-alt"></i> Palolem</div>
+        <div class="location-pill" onclick="selectLocation('Colva')"><i class="fas fa-map-marker-alt"></i> Colva</div>
+        <div class="location-pill" onclick="selectLocation('Vasco da Gama')"><i class="fas fa-map-marker-alt"></i> Vasco da Gama</div>
+        <div class="location-pill" onclick="selectLocation('Benaulim')"><i class="fas fa-map-marker-alt"></i> Benaulim</div>
+        <div class="location-pill" onclick="selectLocation('Cavelossim')"><i class="fas fa-map-marker-alt"></i> Cavelossim</div>
+        <div class="location-pill" onclick="selectLocation('Agonda')"><i class="fas fa-map-marker-alt"></i> Agonda</div>
       </div>
       <div class="locations-group-title"><i class="fas fa-plane" style="margin-right:8px;"></i>Transport Hubs</div>
       <div class="locations-grid">
-        <div class="location-pill"><i class="fas fa-plane"></i> Dabolim Airport</div>
-        <div class="location-pill"><i class="fas fa-train"></i> Madgaon Railway Station</div>
-        <div class="location-pill"><i class="fas fa-bus"></i> Panaji Bus Stand</div>
-        <div class="location-pill"><i class="fas fa-hotel"></i> Hotel / Resort Delivery</div>
+        <div class="location-pill" onclick="selectLocation('Dabolim Airport')"><i class="fas fa-plane"></i> Dabolim Airport</div>
+        <div class="location-pill" onclick="selectLocation('Madgaon Railway Station')"><i class="fas fa-train"></i> Madgaon Railway Station</div>
+        <div class="location-pill" onclick="selectLocation('Panaji Bus Stand')"><i class="fas fa-bus"></i> Panaji Bus Stand</div>
+        <div class="location-pill" onclick="selectLocation('Hotel / Resort Delivery')"><i class="fas fa-hotel"></i> Hotel / Resort Delivery</div>
       </div>
     </div>
   </div>
@@ -1161,39 +1200,88 @@
       <h2 class="section-title">What Our Riders Say</h2>
       <p class="section-sub" style="margin:0 auto;">Don't just take our word for it — here's what our happy customers have to say.</p>
     </div>
-    <div class="testimonials-grid">
-      <div class="testimonial-card fade-in">
-        <div class="t-stars">★★★★★</div>
-        <p class="t-quote">"Booked a scooter for 5 days in Goa and it was the best decision! Delivery was on time, the vehicle was spotless and ran perfectly. Their support team was super responsive. Will definitely book with Book My Wheeler again!"</p>
-        <div class="t-author">
-          <div class="t-avatar a1">P</div>
-          <div>
-            <div class="t-name">Priya S.</div>
-            <div class="t-from"><i class="fas fa-map-marker-alt" style="font-size:11px;margin-right:4px;"></i>Mumbai</div>
+    <div class="testimonials-carousel-wrap">
+      <div class="testimonials-carousel" id="testimonialsCarousel">
+        <div class="testimonials-track" id="testimonialsTrack">
+
+          <div class="testimonial-card">
+            <div class="t-stars" style="color:#FACC15;">★★★★★</div>
+            <p class="t-quote">"Booked a scooter for 5 days in Goa and it was the best decision! Delivery was on time, the vehicle was spotless and ran perfectly. Their support team was super responsive. Will definitely book with Book My Wheeler again!"</p>
+            <div class="t-author">
+              <div class="t-avatar a1">P</div>
+              <div>
+                <div class="t-name">Priya S.</div>
+                <div class="t-from"><i class="fas fa-map-marker-alt" style="font-size:11px;margin-right:4px;"></i>Mumbai</div>
+              </div>
+            </div>
           </div>
+
+          <div class="testimonial-card">
+            <div class="t-stars" style="color:#FACC15;">★★★★★</div>
+            <p class="t-quote">"Rented a Honda Activa for a full week. Zipping through the coastal roads of Goa on a smooth scooter — absolutely magical! The booking process was seamless, pricing was transparent, and the team was incredibly helpful."</p>
+            <div class="t-author">
+              <div class="t-avatar a2">R</div>
+              <div>
+                <div class="t-name">Rahul K.</div>
+                <div class="t-from"><i class="fas fa-map-marker-alt" style="font-size:11px;margin-right:4px;"></i>Bangalore</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="t-stars" style="color:#FACC15;">★★★★★</div>
+            <p class="t-quote">"Our family rented a Hyundai Creta for a 4-day trip. Super smooth process — the car was delivered to our hotel, fully fuelled and clean. No hidden charges at all. Highly recommend Book My Wheeler for anyone visiting Goa!"</p>
+            <div class="t-author">
+              <div class="t-avatar a3">S</div>
+              <div>
+                <div class="t-name">Sneha & Arjun</div>
+                <div class="t-from"><i class="fas fa-map-marker-alt" style="font-size:11px;margin-right:4px;"></i>Delhi</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="t-stars" style="color:#FACC15;">★★★★<span style="color:var(--light-grey);">★</span></div>
+            <p class="t-quote">"Great experience overall. Got a Yamaha Fascino delivered to our resort in Calangute. The scooter was in excellent condition. Delivery was about 20 minutes later than expected, but the team kept us updated. Would still highly recommend!"</p>
+            <div class="t-author">
+              <div class="t-avatar a4">A</div>
+              <div>
+                <div class="t-name">Aditya M.</div>
+                <div class="t-from"><i class="fas fa-map-marker-alt" style="font-size:11px;margin-right:4px;"></i>Pune</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="t-stars" style="color:#FACC15;">★★★★★</div>
+            <p class="t-quote">"Came to Goa for our anniversary and rented a Maruti Swift. Spotless car, on-time delivery, and the entire booking process took less than 5 minutes. The team even called ahead to confirm our hotel address. Absolutely loved the experience!"</p>
+            <div class="t-author">
+              <div class="t-avatar a5">M</div>
+              <div>
+                <div class="t-name">Meera & Vikram</div>
+                <div class="t-from"><i class="fas fa-map-marker-alt" style="font-size:11px;margin-right:4px;"></i>Hyderabad</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="t-stars" style="color:#FACC15;">★★★★<span style="color:var(--light-grey);">★</span></div>
+            <p class="t-quote">"Solid service for the price. The Maruti Swift was clean and fuel-efficient — perfect for exploring both North and South Goa. I'd suggest adding an app so bookings are even easier. Still, the WhatsApp support was quick and helpful!"</p>
+            <div class="t-author">
+              <div class="t-avatar a6">K</div>
+              <div>
+                <div class="t-name">Karthik S.</div>
+                <div class="t-from"><i class="fas fa-map-marker-alt" style="font-size:11px;margin-right:4px;"></i>Chennai</div>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
-      <div class="testimonial-card fade-in">
-        <div class="t-stars">★★★★★</div>
-        <p class="t-quote">"Rented a Royal Enfield Classic 350 for a full week. The coastal roads of Goa on an Enfield — absolutely magical! The booking process was smooth, pricing was transparent, and the team was incredibly helpful."</p>
-        <div class="t-author">
-          <div class="t-avatar a2">R</div>
-          <div>
-            <div class="t-name">Rahul K.</div>
-            <div class="t-from"><i class="fas fa-map-marker-alt" style="font-size:11px;margin-right:4px;"></i>Bangalore</div>
-          </div>
-        </div>
-      </div>
-      <div class="testimonial-card fade-in">
-        <div class="t-stars">★★★★★</div>
-        <p class="t-quote">"Our family rented a car for a 4-day trip. Super smooth process — the car was delivered to our hotel, fully fuelled and clean. No hidden charges at all. Highly recommend Book My Wheeler for anyone visiting Goa!"</p>
-        <div class="t-author">
-          <div class="t-avatar a3">S</div>
-          <div>
-            <div class="t-name">Sneha & Arjun</div>
-            <div class="t-from"><i class="fas fa-map-marker-alt" style="font-size:11px;margin-right:4px;"></i>Delhi</div>
-          </div>
-        </div>
+      <div class="carousel-controls">
+        <button class="carousel-btn" id="carouselPrev" aria-label="Previous"><i class="fas fa-chevron-left"></i></button>
+        <div class="carousel-dots" id="carouselDots"></div>
+        <button class="carousel-btn" id="carouselNext" aria-label="Next"><i class="fas fa-chevron-right"></i></button>
       </div>
     </div>
   </div>
@@ -1488,6 +1576,48 @@
   });
 
   // ============================================================
+  // FLEET SORT
+  // ============================================================
+  let currentSort = 'default';
+  const originalOrder = Array.from(document.querySelectorAll('.vehicle-card'));
+
+  function getPrice(card) {
+    const txt = card.querySelector('.vehicle-price').textContent;
+    return parseInt(txt.replace(/[₹,\s]/g, '').replace('/day', '')) || 0;
+  }
+
+  function isPopular(card) {
+    return card.querySelector('.vehicle-badge.popular') !== null;
+  }
+
+  function applySortAndFilter() {
+    const grid = document.querySelector('.fleet-grid');
+    let cards = Array.from(grid.querySelectorAll('.vehicle-card'));
+
+    if (currentSort === 'low-high') {
+      cards.sort((a, b) => getPrice(a) - getPrice(b));
+    } else if (currentSort === 'high-low') {
+      cards.sort((a, b) => getPrice(b) - getPrice(a));
+    } else if (currentSort === 'popular') {
+      cards.sort((a, b) => (isPopular(b) ? 1 : 0) - (isPopular(a) ? 1 : 0));
+    } else {
+      // Restore original DOM order
+      cards = originalOrder.filter(c => grid.contains(c));
+    }
+
+    cards.forEach(card => grid.appendChild(card));
+  }
+
+  document.querySelectorAll('.sort-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+      currentSort = this.dataset.sort;
+      applySortAndFilter();
+    });
+  });
+
+  // ============================================================
   // FAQ ACCORDION
   // ============================================================
   function toggleFaq(el) {
@@ -1495,6 +1625,20 @@
     const isOpen = item.classList.contains('open');
     document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
     if (!isOpen) item.classList.add('open');
+  }
+
+  // ============================================================
+  // SELECT LOCATION & SCROLL TO FORM (for location pills)
+  // ============================================================
+  function selectLocation(value) {
+    const select = document.getElementById('pickupLocation');
+    for (let i = 0; i < select.options.length; i++) {
+      if (select.options[i].text === value || select.options[i].value === value) {
+        select.selectedIndex = i;
+        break;
+      }
+    }
+    scrollToForm();
   }
 
   // ============================================================
@@ -1613,6 +1757,87 @@
       btn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Booking Request';
     }
   });
+
+  // ============================================================
+  // TESTIMONIALS CAROUSEL
+  // ============================================================
+  (function() {
+    const track = document.getElementById('testimonialsTrack');
+    const carousel = document.getElementById('testimonialsCarousel');
+    const dotsWrap = document.getElementById('carouselDots');
+    const cards = Array.from(track.children);
+    let currentIndex = 0;
+    let autoTimer = null;
+
+    function getVisible() {
+      const w = carousel.offsetWidth;
+      if (w < 600) return 1;
+      if (w < 960) return 2;
+      return 3;
+    }
+
+    function totalSlides() {
+      return Math.ceil(cards.length / getVisible());
+    }
+
+    function buildDots() {
+      dotsWrap.innerHTML = '';
+      for (let i = 0; i < totalSlides(); i++) {
+        const d = document.createElement('div');
+        d.className = 'carousel-dot' + (i === currentIndex ? ' active' : '');
+        d.addEventListener('click', () => goTo(i));
+        dotsWrap.appendChild(d);
+      }
+    }
+
+    function updateDots() {
+      dotsWrap.querySelectorAll('.carousel-dot').forEach((d, i) => {
+        d.classList.toggle('active', i === currentIndex);
+      });
+    }
+
+    function goTo(index) {
+      const visible = getVisible();
+      const max = totalSlides() - 1;
+      currentIndex = Math.max(0, Math.min(index, max));
+      const cardWidth = cards[0].offsetWidth + 24; // card width + gap
+      track.style.transform = `translateX(-${currentIndex * visible * cardWidth}px)`;
+      updateDots();
+    }
+
+    function next() { goTo(currentIndex + 1 < totalSlides() ? currentIndex + 1 : 0); }
+    function prev() { goTo(currentIndex - 1 >= 0 ? currentIndex - 1 : totalSlides() - 1); }
+
+    function startAuto() {
+      stopAuto();
+      autoTimer = setInterval(next, 4500);
+    }
+    function stopAuto() { clearInterval(autoTimer); }
+
+    document.getElementById('carouselNext').addEventListener('click', () => { next(); startAuto(); });
+    document.getElementById('carouselPrev').addEventListener('click', () => { prev(); startAuto(); });
+
+    carousel.addEventListener('mouseenter', stopAuto);
+    carousel.addEventListener('mouseleave', startAuto);
+
+    // Touch / swipe support
+    let touchStartX = 0;
+    carousel.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+    carousel.addEventListener('touchend', e => {
+      const delta = touchStartX - e.changedTouches[0].clientX;
+      if (Math.abs(delta) > 50) { delta > 0 ? next() : prev(); startAuto(); }
+    }, { passive: true });
+
+    // Re-init on resize
+    window.addEventListener('resize', () => {
+      buildDots();
+      goTo(0);
+    });
+
+    buildDots();
+    goTo(0);
+    startAuto();
+  })();
 </script>
 </body>
 </html>
