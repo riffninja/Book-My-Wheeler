@@ -12,7 +12,7 @@
   <meta property="og:type" content="website" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700;9..144,900&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <style>
     /* ============================================================
@@ -25,8 +25,7 @@
       --primary-light: #ff9a4d;    /* Soft accent */
       --navy: #0077B6;             /* Ocean Blue – logo, header, links, secondary buttons */
       --navy-light: #005a8e;       /* Darker Ocean Blue */
-      --teal: #00BFA6;             /* Seafoam Teal – secondary actions, filters, hover states */
-      --palm-green: #2E7D32;       /* Palm Green – eco badges, success labels */
+      --teal: #00BFA6;             /* Seafoam Teal – micro-accent only: icon highlights, footer hover */
 
       /* ── Neutrals ── */
       --white: #ffffff;
@@ -62,14 +61,17 @@
     ============================================================ */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; font-size: 16px; }
-    body { font-family: 'Inter', sans-serif; color: var(--charcoal); background: var(--off-white); overflow-x: hidden; }
-    h1,h2,h3,h4,h5 { font-family: 'Poppins', sans-serif; line-height: 1.2; }
+    body { font-family: 'DM Sans', sans-serif; color: var(--charcoal); background: var(--off-white); overflow-x: hidden; }
+    h1,h2,h3,h4,h5 { font-family: 'Fraunces', serif; line-height: 1.2; }
     img { max-width: 100%; display: block; }
     a { text-decoration: none; color: inherit; }
     ul { list-style: none; }
     input, select, textarea, button { font-family: inherit; }
     .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
     .section { padding: 80px 0; }
+    #fleet { padding: 100px 0; }
+    #how-it-works { padding: 120px 0; }
+    #faq { padding: 80px 0 100px; }
     .section-tag { display: inline-block; background: rgba(0,119,182,0.10); color: var(--navy); font-size: 13px; font-weight: 600; padding: 6px 16px; border-radius: 20px; margin-bottom: 12px; letter-spacing: 0.5px; text-transform: uppercase; }
     .section-title { font-size: clamp(1.75rem, 4vw, 2.6rem); font-weight: 800; color: var(--charcoal); margin-bottom: 12px; }
     .section-sub { font-size: 1.05rem; color: var(--slate); max-width: 560px; line-height: 1.7; }
@@ -96,9 +98,9 @@
       box-shadow: 0 2px 20px rgba(0,0,0,0.2);
     }
     .nav-inner { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
-    .nav-logo { display: flex; align-items: center; gap: 10px; font-family: 'Poppins', sans-serif; font-weight: 800; font-size: 1.3rem; color: white; }
+    .nav-logo { display: flex; align-items: center; gap: 10px; font-family: 'Fraunces', serif; font-weight: 900; font-size: 1.3rem; color: white; }
     .nav-logo span { color: var(--teal); }
-    .nav-logo .logo-icon { width: 38px; height: 38px; background: var(--primary); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+    .logo-icon { width: 38px; height: 38px; flex-shrink: 0; }
     .nav-links { display: flex; align-items: center; gap: 32px; }
     .nav-links a { color: rgba(255,255,255,0.85); font-size: 14px; font-weight: 500; transition: color 0.2s; }
     .nav-links a:hover { color: white; }
@@ -116,7 +118,7 @@
       align-items: center; justify-content: center; gap: 32px;
     }
     .mobile-menu.open { display: flex; }
-    .mobile-menu a { color: var(--charcoal); font-size: 1.4rem; font-weight: 600; font-family: 'Poppins', sans-serif; transition: color 0.2s; }
+    .mobile-menu a { color: var(--charcoal); font-size: 1.4rem; font-weight: 700; font-family: 'Fraunces', serif; transition: color 0.2s; }
     .mobile-menu a:hover { color: var(--navy); }
     .mobile-menu .mob-wa { background: #25D366; color: white; padding: 14px 32px; border-radius: 12px; margin-top: 8px; }
     .mobile-close { position: absolute; top: 20px; right: 20px; color: var(--charcoal); font-size: 1.5rem; cursor: pointer; padding: 8px; }
@@ -210,12 +212,6 @@
       box-shadow: 0 24px 64px rgba(0,0,0,0.3), 0 0 0 1px rgba(255,255,255,0.1);
       position: relative;
     }
-    .form-card::before {
-      content: '';
-      position: absolute; top: -1px; left: 20px; right: 20px; height: 4px;
-      background: linear-gradient(90deg, var(--navy), var(--teal));
-      border-radius: 0 0 4px 4px;
-    }
     .form-card-title {
       font-size: 1.35rem; font-weight: 800; color: var(--charcoal);
       display: flex; align-items: center; gap: 10px; margin-bottom: 4px;
@@ -284,7 +280,7 @@
       transform: translateY(-50%); width: 1px; height: 50px;
       background: rgba(255,255,255,0.12);
     }
-    .stat-number { font-family: 'Poppins', sans-serif; font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 800; color: white; line-height: 1; }
+    .stat-number { font-family: 'Fraunces', serif; font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 900; color: white; line-height: 1; }
     .stat-plus { color: var(--teal); }
     .stat-label { font-size: 14px; color: rgba(255,255,255,0.7); margin-top: 6px; font-weight: 500; }
 
@@ -323,7 +319,7 @@
     .vehicle-card:hover { transform: translateY(-6px); box-shadow: 0 20px 48px rgba(0,0,0,0.12); border-color: var(--navy); }
     .vehicle-card.hidden { display: none; }
     .vehicle-img {
-      height: 190px;
+      height: 240px;
       display: flex; align-items: center; justify-content: center;
       font-size: 5rem; position: relative;
     }
@@ -338,7 +334,7 @@
       font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 20px;
       text-transform: uppercase; letter-spacing: 0.5px;
     }
-    .vehicle-badge.popular { background: var(--palm-green); }
+    .vehicle-badge.popular { background: var(--navy); }
     .vehicle-body { padding: 18px; }
     .vehicle-name { font-size: 1rem; font-weight: 700; color: var(--charcoal); margin-bottom: 4px; }
     .vehicle-tagline { font-size: 13px; color: var(--slate); margin-bottom: 12px; }
@@ -363,7 +359,7 @@
     .feature-icon { width: 56px; height: 56px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-bottom: 16px; }
     .feature-icon.orange { background: rgba(255,122,33,0.12); color: var(--primary); }
     .feature-icon.blue { background: rgba(0,119,182,0.10); color: var(--navy); }
-    .feature-icon.green { background: rgba(46,125,50,0.10); color: var(--palm-green); }
+    .feature-icon.green { background: rgba(0,119,182,0.10); color: var(--navy); }
     .feature-icon.teal { background: rgba(0,191,166,0.12); color: var(--teal); }
     .feature-title { font-size: 1rem; font-weight: 700; color: var(--charcoal); margin-bottom: 8px; }
     .feature-desc { font-size: 14px; color: var(--slate); line-height: 1.65; }
@@ -372,12 +368,20 @@
        HOW IT WORKS
     ============================================================ */
     .steps-wrap { margin-top: 56px; position: relative; }
-    .steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; position: relative; }
-    .step-card { text-align: center; position: relative; z-index: 1; }
-    .step-label { font-size: 12px; font-weight: 600; color: var(--slate); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
-    .step-icon { font-size: 3rem; margin-bottom: 16px; }
+    .steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; position: relative; }
+    .step-card {
+      position: relative; z-index: 1;
+      background: white; border-radius: var(--radius-lg); padding: 32px 28px;
+      border: 1.5px solid var(--light-grey); transition: var(--transition);
+    }
+    .step-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: var(--primary); }
+    .step-number {
+      font-family: 'Fraunces', serif; font-size: 4.5rem; font-weight: 900;
+      line-height: 1; color: var(--primary); margin-bottom: 20px;
+      letter-spacing: -2px; opacity: 0.85;
+    }
     .step-title { font-size: 1.1rem; font-weight: 700; color: var(--charcoal); margin-bottom: 10px; }
-    .step-desc { font-size: 14px; color: var(--slate); line-height: 1.65; max-width: 220px; margin: 0 auto; }
+    .step-desc { font-size: 14px; color: var(--slate); line-height: 1.65; }
 
     /* ============================================================
        LOCATIONS
@@ -402,7 +406,7 @@
     /* ============================================================
        TESTIMONIALS CAROUSEL
     ============================================================ */
-    .testimonials-section { background: var(--sand-beige); }
+    .testimonials-section { background: white; }
     .testimonials-carousel-wrap { position: relative; margin-top: 48px; }
     .testimonials-carousel { overflow: hidden; }
     .testimonials-track {
@@ -472,14 +476,13 @@
        CTA BANNER
     ============================================================ */
     .cta-banner {
-      background: linear-gradient(135deg, #FF7A21 0%, #e05f0e 50%, #c24d08 100%);
-      padding: 80px 0; text-align: center; position: relative; overflow: hidden;
+      background: url('images/hero-banner.jpg') center center / cover no-repeat;
+      padding: 100px 0; text-align: center; position: relative; overflow: hidden;
     }
     .cta-banner::before {
       content: '';
       position: absolute; inset: 0;
-      background-image: radial-gradient(circle, rgba(255,255,255,0.06) 1px, transparent 1px);
-      background-size: 32px 32px;
+      background: rgba(185, 65, 0, 0.80);
     }
     .cta-banner-inner { position: relative; z-index: 1; }
     .cta-banner h2 { font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 900; color: white; margin-bottom: 14px; }
@@ -500,7 +503,7 @@
     .footer-socials { display: flex; gap: 10px; }
     .social-icon { width: 40px; height: 40px; border-radius: 10px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); color: rgba(255,255,255,0.7); display: flex; align-items: center; justify-content: center; font-size: 16px; transition: var(--transition); }
     .social-icon:hover { background: var(--primary); border-color: var(--primary); color: white; transform: translateY(-2px); }
-    .footer-col h4 { font-family: 'Poppins', sans-serif; font-size: 13px; font-weight: 700; color: white; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 20px; }
+    .footer-col h4 { font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 700; color: white; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 20px; }
     .footer-col ul li { margin-bottom: 10px; }
     .footer-col ul a { font-size: 14px; color: rgba(255,255,255,0.55); transition: color 0.2s; }
     .footer-col ul a:hover { color: var(--teal); }
@@ -554,8 +557,7 @@
       .stat-item:nth-child(2)::after { display: none; }
       .fleet-grid { grid-template-columns: 1fr 1fr; gap: 16px; }
       .features-grid { grid-template-columns: 1fr 1fr; }
-      .steps-grid { grid-template-columns: 1fr; gap: 32px; }
-      .steps-grid::before { display: none; }
+      .steps-grid { grid-template-columns: 1fr; gap: 20px; }
       .testimonial-card { flex: 0 0 100%; }
       .footer-grid { grid-template-columns: 1fr 1fr; }
       .form-grid { grid-template-columns: 1fr; }
@@ -588,7 +590,14 @@
   <div class="container">
     <div class="nav-inner">
       <a href="#" class="nav-logo">
-        <div class="logo-icon">🛵</div>
+        <svg class="logo-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 38 38" aria-hidden="true">
+          <rect width="38" height="38" rx="8" fill="#FF7A21"/>
+          <circle cx="10" cy="27" r="5" fill="none" stroke="white" stroke-width="2"/>
+          <circle cx="28" cy="27" r="5" fill="none" stroke="white" stroke-width="2"/>
+          <path d="M15 27 L17 19 L23 19 L28 22" fill="none" stroke="white" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+          <path d="M23 19 L25 13 L30 13" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M17 19 L22 18" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
         Book My <span>Wheeler</span>
       </a>
       <ul class="nav-links">
@@ -1149,20 +1158,17 @@
     <div class="steps-wrap">
       <div class="steps-grid">
         <div class="step-card fade-in">
-          <div class="step-label">Step 1</div>
-          <div class="step-icon">📋</div>
+          <div class="step-number">01</div>
           <div class="step-title">Fill the Form</div>
           <div class="step-desc">Share your ride preferences — vehicle type, location, and dates — using the quick booking form above.</div>
         </div>
         <div class="step-card fade-in">
-          <div class="step-label">Step 2</div>
-          <div class="step-icon">📞</div>
+          <div class="step-number">02</div>
           <div class="step-title">Get Confirmation Call</div>
           <div class="step-desc">Our team calls you back within 30 minutes to confirm availability, pricing, and all the details.</div>
         </div>
         <div class="step-card fade-in">
-          <div class="step-label">Step 3</div>
-          <div class="step-icon">🏖️</div>
+          <div class="step-number">03</div>
           <div class="step-title">Receive & Ride</div>
           <div class="step-desc">We deliver the vehicle to your doorstep. Pick up the keys and hit Goa's beautiful roads — your way!</div>
         </div>
@@ -1389,7 +1395,14 @@
     <div class="footer-grid">
       <div class="footer-brand">
         <div class="nav-logo" style="margin-bottom:16px;color:white;">
-          <div class="logo-icon">🛵</div>
+          <svg class="logo-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 38 38" aria-hidden="true">
+            <rect width="38" height="38" rx="8" fill="#FF7A21"/>
+            <circle cx="10" cy="27" r="5" fill="none" stroke="white" stroke-width="2"/>
+            <circle cx="28" cy="27" r="5" fill="none" stroke="white" stroke-width="2"/>
+            <path d="M15 27 L17 19 L23 19 L28 22" fill="none" stroke="white" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+            <path d="M23 19 L25 13 L30 13" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M17 19 L22 18" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
           Book My <span style="color:var(--teal);">Wheeler</span>
         </div>
         <p class="footer-tagline">Goa's most trusted self-drive rental service. Explore every beach, cliff, and sunset on your own terms.</p>
