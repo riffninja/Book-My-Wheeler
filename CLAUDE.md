@@ -93,3 +93,141 @@ World-class UI/UX design expertise covering principles, trends, and Apple's late
 - Interaction design: feedback, affordance, progressive disclosure
 - Accessibility: WCAG 2.2, inclusive design, screen reader patterns
 - Design system architecture: tokens, components, patterns, documentation
+
+---
+
+---
+
+## Project Context
+
+### What this project is
+**Book My Wheeler** is a Goa-based self-drive vehicle rental business. The site is a single-page HTML/CSS/JS lead-generation landing page. Primary goal: capture leads (name, phone, vehicle type) and convert them to WhatsApp/call bookings.
+
+### Tech Stack
+- Pure HTML5 + CSS3 + vanilla JS (no framework)
+- Google Fonts (Poppins + Inter — being replaced, see Design Decisions)
+- Font Awesome 6 (CDN) for icons
+- Google Apps Script backend for form submissions (google-apps-script.js)
+- Hosted as static files; images are local PNGs
+
+### Business Context
+- Target market: Tourists visiting Goa, India
+- Primary conversion path: Hero booking form → WhatsApp callback
+- Key differentiators: Doorstep delivery, video documentation at pickup, no hidden charges, 24/7 support
+- Fleet: Scooters (Honda Activa, Yamaha Fascino), Cars (Hyundai, Maruti, Mahindra, Toyota), SUVs (Thar, Scorpio, Fortuner, Innova)
+- Contact: WhatsApp +91 95798 68810
+
+### Constraints
+- No build pipeline — changes go directly into index.html
+- Images are local PNGs in /images/ folder
+- Form uses Google Apps Script for submissions
+- Must keep WhatsApp CTA prominent (critical for Indian market)
+- Must keep the lead capture form in the hero section
+
+---
+
+## Design Decisions
+
+### Typography
+**Decision (2026-03-06):** Replace Poppins (headings) + Inter (body) with a distinctive pairing.
+- **Rationale:** Poppins + Inter is the most overused combo on AI-generated landing pages. Per the `frontend-design` skill: "NEVER use generic font families like Inter, Roboto, Arial." The goal is an unforgettable, editorial feel that matches Goa's coastal premium-travel personality.
+- **Chosen pairing:** Fraunces (expressive display serif for headings) + DM Sans (clean, modern body)
+- **Rule going forward:** Never revert to Poppins/Inter/Roboto/Space Grotesk. The `frontend-design` skill specifically warns against converging on "Space Grotesk" — avoid it.
+
+### Colour Palette
+**Decision (2026-03-06):** Simplify from 4 competing colours to strict 60-30-10.
+- **60% — Off-white/light** (`#F9FAFB`) for section backgrounds
+- **30% — Deep Navy** (`#0077B6`) as structural backbone (navbars, footers, stats bar)
+- **10% — Sunset Orange** (`#FF7A21`) for ALL CTAs, price highlights, active states
+- **Teal** (`#00BFA6`) demoted to micro-accent only: icon highlights, one hover state in footer. Not a section colour.
+- **Palm Green** (`#2E7D32`) removed entirely — not a meaningful differentiator.
+- **Rationale:** 60-30-10 rule from `ui-ux-design-expert` skill. "Dominant colours with sharp accents outperform timid, evenly-distributed palettes."
+
+### Logo
+**Decision (2026-03-06):** Replace 🛵 emoji with inline SVG scooter/wheel icon.
+- **Rationale:** Emoji logos are unprofessional and render inconsistently across OSes.
+
+### Section Spacing
+**Decision (2026-03-06):** Vary padding across sections rather than uniform 80px everywhere.
+- Hero: full-bleed, 100vh
+- Stats: tight — 48px
+- Fleet: generous — 100px top
+- Features: 80px
+- How It Works: dramatic — 120px (makes bold step numbers breathe)
+- Testimonials: 80px
+- CTA: 100px
+- Footer: 64px (keep as-is)
+
+### How It Works
+**Decision (2026-03-06):** Replace emoji step icons with large bold step numbers (01 / 02 / 03) in the display font at ~5rem, left-aligned within cards. Per `frontend-design` skill: "What's the one thing someone will remember?"
+
+### Testimonials
+**Decision (2026-03-06):** Remove `#F4E1C1` (sand-beige) section background. Use white (`#FFFFFF`). Per `ui-ux-design-expert` skill: the carousel is sub-optimal (only 1% of users click carousel slides), but keeping it functional while removing the clashing background colour.
+
+### CTA Banner
+**Decision (2026-03-06):** Replace flat orange gradient (`linear-gradient(135deg, #FF7A21 → #c24d08)`) with the hero banner photo + orange-tinted overlay. Same image reuse = no extra HTTP request.
+
+### Form Card
+**Decision (2026-03-06):** Remove the `.form-card::before` 4px gradient stripe (navy → teal). It's a 2019 SaaS cliché. The card's shadow and white background are enough elevation signal.
+
+### Vehicle Cards
+**Decision (2026-03-06):** Increase vehicle image height from 190px to 240px. Photography is the strongest asset — let it breathe.
+
+---
+
+## Learnings from Skill Files (riffninja-designskills branch)
+
+### From `frontend-design.skill`
+- Before coding any UI, commit to a BOLD aesthetic direction and execute with precision
+- "What makes this UNFORGETTABLE?" is the primary design question
+- Spatial composition: prioritise asymmetry, overlap, diagonal flow over perfect symmetry
+- One well-orchestrated page-load stagger creates more delight than scattered micro-interactions
+- Backgrounds: prefer gradient meshes, noise textures, layered transparencies over solid colours
+- Never converge on common font choices — every generation should be distinct
+
+### From `ui-ux-design-expert.skill`
+- The Hierarchy of User Needs: Functional → Reliable → Usable → Pleasurable. Never sacrifice a lower level for a higher one.
+- 2025–2026 trend: **Bento Grid Layouts** replacing carousels (only 1% of users click carousel slides; 89% of clicks go to first slide only). Applicable to testimonials in future iteration.
+- 2025–2026 trend: **Liquid Glass Aesthetic** — glassmorphism evolved. Controls float above content as a distinct layer.
+- Generous whitespace signals quality and premium feel. Group related content with proximity; separate unrelated content with space.
+- 60-30-10 colour rule: dominant (60%) + structural (30%) + sharp accent (10%)
+
+### From `apple-design.skill`
+- **Liquid Glass** is correctly reserved for the *navigation layer* (nav bars, tab bars, floating controls) — NOT content areas. The site's hero badge/bullets use glassmorphism correctly.
+- **Concentricity rule**: `inner_radius = outer_radius - padding`. A button inside a 16px-radius card with ~6px padding should have a ~10px radius. Apply when creating nested rounded elements.
+- **Opacity system**: 100% for critical content, 70% for supporting, 40% for decorative, 20% for atmospheric depth
+- Touch targets: 44×44px minimum — all interactive elements comply (checked)
+- Always add `prefers-reduced-motion` media query for accessibility
+
+### From `pagespeed-optimizer.skill`
+- Convert all vehicle images from PNG to WebP/AVIF (40–70% smaller)
+- Add explicit `width` and `height` to all `<img>` tags to prevent CLS
+- Do NOT lazy-load hero images (increases LCP) — add `<link rel="preload">` for hero banner
+- Self-host fonts instead of Google Fonts when possible (saves DNS lookup)
+- Each third-party CDN script (Font Awesome) adds ~34ms average load time
+- Target TTFB < 600ms; mobile PageSpeed ≥ 70 for Google Ads Quality Score
+
+---
+
+## Conventions & Rules
+
+### Code
+- All styles live in `<style>` inside `index.html` — no external CSS file
+- All scripts live in `<script>` at bottom of `index.html` — no external JS file
+- CSS custom properties (`--var`) are the single source of truth for all colours, radii, and transitions
+- Never hardcode a colour hex outside the `:root` block
+- Use `clamp()` for responsive font sizes (already in use — keep this pattern)
+- Maintain existing section `id` attributes — they're used for anchor navigation
+
+### Design
+- **Never use Poppins, Inter, Roboto, Arial, or Space Grotesk** as primary typefaces on this project
+- **Never add a 4th brand colour** — palette is locked at Orange / Navy / Teal (micro only)
+- **Glassmorphism** (`backdrop-filter: blur`) is only acceptable on navigation-layer elements (navbar, modal overlay, hero floating badges) — not on content cards
+- Always check concentricity when adding a rounded element inside another rounded container
+- The WhatsApp CTA is non-negotiable — must remain visible on all breakpoints
+- Form in hero is non-negotiable — core conversion mechanism
+
+### Git
+- Working branch: `claude/add-skill-documentation-IoEGz`
+- All design changes go to this branch
+- Never push to `master` directly
