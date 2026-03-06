@@ -114,14 +114,16 @@
     .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
     .mobile-menu {
       display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-      background: var(--off-white); z-index: 999; flex-direction: column;
+      background: linear-gradient(160deg, #050e1a 0%, #0077B6 100%); z-index: 999; flex-direction: column;
       align-items: center; justify-content: center; gap: 32px;
     }
     .mobile-menu.open { display: flex; }
-    .mobile-menu a { color: var(--charcoal); font-size: 1.4rem; font-weight: 700; font-family: 'Fraunces', serif; transition: color 0.2s; }
-    .mobile-menu a:hover { color: var(--navy); }
+    .mobile-menu a { color: rgba(255,255,255,0.9); font-size: 1.4rem; font-weight: 700; font-family: 'Fraunces', serif; transition: color 0.2s; }
+    .mobile-menu a:hover { color: var(--teal); }
     .mobile-menu .mob-wa { background: #25D366; color: white; padding: 14px 32px; border-radius: 12px; margin-top: 8px; }
-    .mobile-close { position: absolute; top: 20px; right: 20px; color: var(--charcoal); font-size: 1.5rem; cursor: pointer; padding: 8px; }
+    .mobile-close { position: absolute; top: 20px; right: 20px; color: rgba(255,255,255,0.8); font-size: 1.5rem; cursor: pointer; padding: 8px; }
+    .navbar.menu-open .nav-logo { color: white; }
+    .navbar.menu-open { background: rgba(5,14,26,0.97); }
 
     /* ============================================================
        HERO
@@ -1483,8 +1485,10 @@
   function toggleMenu() {
     const menu = document.getElementById('mobileMenu');
     const burger = document.getElementById('hamburger');
+    const navbar = document.getElementById('navbar');
     menu.classList.toggle('open');
     burger.classList.toggle('open');
+    navbar.classList.toggle('menu-open');
     document.body.style.overflow = menu.classList.contains('open') ? 'hidden' : '';
   }
 
