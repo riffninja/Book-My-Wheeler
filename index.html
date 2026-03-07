@@ -1448,7 +1448,7 @@
         </div>
         <div class="footer-contact-item">
           <i class="fas fa-envelope"></i>
-          <span><a href="mailto:bookings@bookmywheeler.com" style="color:inherit;">bookings@bookmywheeler.com</a></span>
+          <span><a href="mailto:bookmywheeler@gmail.com" style="color:inherit;">bookmywheeler@gmail.com</a></span>
         </div>
         <div class="footer-contact-item">
           <i class="fas fa-map-marker-alt"></i>
@@ -1477,7 +1477,21 @@
   // CONFIGURATION
   // ============================================================
   // Paste your Google Apps Script Web App URL here after deploying:
-  const SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwpJZzOqYaApHS-5txw98P6C9zCgGPY7tgIGtUj31I93FvpZsbFrrDy-wOFtYdXWKCN8g/exec';
+
+  // ============================================================
+  // UTM PARAMETER CAPTURE
+  // ============================================================
+  const _utmParams = (function() {
+    const p = new URLSearchParams(window.location.search);
+    return {
+      utm_source:   p.get('utm_source')   || '',
+      utm_medium:   p.get('utm_medium')   || '',
+      utm_campaign: p.get('utm_campaign') || '',
+      utm_content:  p.get('utm_content')  || '',
+      utm_term:     p.get('utm_term')     || '',
+    };
+  })();
 
   // ============================================================
   // MOBILE MENU
@@ -1745,6 +1759,7 @@
     const phone = document.getElementById('phone').value.trim();
     const email = document.getElementById('email').value.trim();
     const vehicleType = document.getElementById('vehicleType').value;
+    const vehicleModel = document.getElementById('vehicleSelect').value;
     const pickupLocation = document.getElementById('pickupLocation').value;
     const pickupDate = document.getElementById('pickupDate').value;
     const returnDate = document.getElementById('returnDate').value;
@@ -1753,6 +1768,7 @@
     if (!name) { showError('Please enter your full name.'); return; }
     if (!phone || phone.replace(/\D/g, '').length < 10) { showError('Please enter a valid 10-digit phone number.'); return; }
     if (!vehicleType) { showError('Please select a vehicle type.'); return; }
+    if (!vehicleModel) { showError('Please select a vehicle model.'); return; }
     if (!pickupLocation) { showError('Please select a pickup location.'); return; }
     if (!pickupDate) { showError('Please select a pickup date.'); return; }
     if (!returnDate) { showError('Please select a return date.'); return; }
@@ -1770,9 +1786,14 @@
 
     const formData = {
       timestamp: new Date().toISOString(),
-      name, phone, email, vehicleType, pickupLocation,
+      name, phone, email, vehicleType, vehicleModel, pickupLocation,
       pickupDate, returnDate,
-      source: 'bookmywheeler.com'
+      source: 'bookmywheeler.com',
+      utm_source:   _utmParams.utm_source,
+      utm_medium:   _utmParams.utm_medium,
+      utm_campaign: _utmParams.utm_campaign,
+      utm_content:  _utmParams.utm_content,
+      utm_term:     _utmParams.utm_term,
     };
 
     try {

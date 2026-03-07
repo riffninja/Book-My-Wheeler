@@ -9,8 +9,8 @@
  *
  * SETUP INSTRUCTIONS:
  * ----------------------------------------------------------------
- * Step 1: Create a new Google Sheet at sheets.google.com
- *         Name it: "Book My Wheeler — Leads"
+ * Step 1: Open the existing Google Sheet:
+ *         https://docs.google.com/spreadsheets/d/1JUpAFW1KM4V0Fcf5TCHhQgY7rklZvROoRFYotEaKtuE/edit
  *
  * Step 2: Open Extensions > Apps Script
  *
@@ -45,10 +45,11 @@
 // CONFIGURATION — Update these values
 // ----------------------------------------------------------------
 const CONFIG = {
-  ADMIN_EMAIL: 'bookings@bookmywheeler.com', // ← Replace with your email
-  SHEET_NAME: 'Leads',                        // ← Sheet tab name
+  ADMIN_EMAIL: 'bookmywheeler@gmail.com',
+  SPREADSHEET_ID: '1JUpAFW1KM4V0Fcf5TCHhQgY7rklZvROoRFYotEaKtuE',
+  SHEET_NAME: 'Leads',
   BRAND_NAME: 'Book My Wheeler',
-  BRAND_PHONE: '+91 XXXXXXXXXX',             // ← Replace with your phone
+  BRAND_PHONE: '+91 95798 68810',
   BRAND_WEBSITE: 'www.bookmywheeler.com',
 };
 
@@ -105,7 +106,7 @@ function doGet(e) {
 // Save lead data to Google Sheet
 // ----------------------------------------------------------------
 function saveToSheet(data) {
-  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const ss = SpreadsheetApp.openById(CONFIG.SPREADSHEET_ID);
   let sheet = ss.getSheetByName(CONFIG.SHEET_NAME);
 
   // Create the sheet if it doesn't exist
@@ -118,17 +119,23 @@ function saveToSheet(data) {
       'Phone',
       'Email',
       'Vehicle Type',
+      'Vehicle Model',
       'Pickup Location',
       'Pickup Date',
       'Return Date',
       'Duration (Days)',
       'Estimated Value (₹)',
       'Source',
-      'Status'
+      'Status',
+      'UTM Source',
+      'UTM Medium',
+      'UTM Campaign',
+      'UTM Content',
+      'UTM Term'
     ]);
 
     // Style header row
-    const headerRange = sheet.getRange(1, 1, 1, 12);
+    const headerRange = sheet.getRange(1, 1, 1, 18);
     headerRange.setBackground('#FF6B35');
     headerRange.setFontColor('#FFFFFF');
     headerRange.setFontWeight('bold');
@@ -139,14 +146,20 @@ function saveToSheet(data) {
     sheet.setColumnWidth(2, 150); // Name
     sheet.setColumnWidth(3, 130); // Phone
     sheet.setColumnWidth(4, 200); // Email
-    sheet.setColumnWidth(5, 150); // Vehicle Type
-    sheet.setColumnWidth(6, 160); // Pickup Location
-    sheet.setColumnWidth(7, 120); // Pickup Date
-    sheet.setColumnWidth(8, 120); // Return Date
-    sheet.setColumnWidth(9, 120); // Duration
-    sheet.setColumnWidth(10, 150); // Est. Value
-    sheet.setColumnWidth(11, 120); // Source
-    sheet.setColumnWidth(12, 100); // Status
+    sheet.setColumnWidth(5, 130); // Vehicle Type
+    sheet.setColumnWidth(6, 180); // Vehicle Model
+    sheet.setColumnWidth(7, 160); // Pickup Location
+    sheet.setColumnWidth(8, 120); // Pickup Date
+    sheet.setColumnWidth(9, 120); // Return Date
+    sheet.setColumnWidth(10, 120); // Duration
+    sheet.setColumnWidth(11, 150); // Est. Value
+    sheet.setColumnWidth(12, 120); // Source
+    sheet.setColumnWidth(13, 100); // Status
+    sheet.setColumnWidth(14, 130); // UTM Source
+    sheet.setColumnWidth(15, 130); // UTM Medium
+    sheet.setColumnWidth(16, 180); // UTM Campaign
+    sheet.setColumnWidth(17, 150); // UTM Content
+    sheet.setColumnWidth(18, 130); // UTM Term
   }
 
   // Calculate duration
@@ -177,13 +190,19 @@ function saveToSheet(data) {
     data.phone || '',
     data.email || '',
     data.vehicleType || '',
+    data.vehicleModel || '',
     data.pickupLocation || '',
     data.pickupDate || '',
     data.returnDate || '',
     duration,
     estimatedValue,
     data.source || 'bookmywheeler.com',
-    'New Lead' // Default status
+    'New Lead',
+    data.utm_source   || '',
+    data.utm_medium   || '',
+    data.utm_campaign || '',
+    data.utm_content  || '',
+    data.utm_term     || '',
   ]);
 }
 
@@ -219,6 +238,10 @@ function sendAdminEmail(data) {
             <td style="padding: 12px; border-bottom: 1px solid #eee;"><span style="background: #FF6B35; color: white; padding: 4px 12px; border-radius: 20px; font-size: 14px;">${data.vehicleType || 'Not specified'}</span></td>
           </tr>
           <tr>
+            <td style="padding: 12px; font-weight: bold; color: #555; border-bottom: 1px solid #eee;">🚗 Vehicle Model</td>
+            <td style="padding: 12px; border-bottom: 1px solid #eee;"><strong>${data.vehicleModel || 'Not specified'}</strong></td>
+          </tr>
+          <tr>
             <td style="padding: 12px; font-weight: bold; color: #555; border-bottom: 1px solid #eee;">📍 Pickup Location</td>
             <td style="padding: 12px; color: #0A2540; border-bottom: 1px solid #eee;">${data.pickupLocation || 'Not specified'}</td>
           </tr>
@@ -231,9 +254,22 @@ function sendAdminEmail(data) {
             <td style="padding: 12px; color: #0A2540; border-bottom: 1px solid #eee;">${data.returnDate || 'Not specified'}</td>
           </tr>
           <tr>
-            <td style="padding: 12px; font-weight: bold; color: #555;">🌐 Source</td>
-            <td style="padding: 12px; color: #0A2540;">${data.source || 'bookmywheeler.com'}</td>
+            <td style="padding: 12px; font-weight: bold; color: #555; border-bottom: 1px solid #eee;">🌐 Source</td>
+            <td style="padding: 12px; color: #0A2540; border-bottom: 1px solid #eee;">${data.source || 'bookmywheeler.com'}</td>
           </tr>
+          ${(data.utm_source || data.utm_medium || data.utm_campaign) ? `
+          <tr>
+            <td colspan="2" style="padding: 12px; background: #f0f4ff; border-radius: 6px;">
+              <strong style="color: #0A2540;">📊 Ad Attribution</strong><br>
+              <span style="color: #555; font-size: 13px;">
+                ${data.utm_source ? `Source: <strong>${data.utm_source}</strong>` : ''}
+                ${data.utm_medium ? ` &nbsp;|&nbsp; Medium: <strong>${data.utm_medium}</strong>` : ''}
+                ${data.utm_campaign ? ` &nbsp;|&nbsp; Campaign: <strong>${data.utm_campaign}</strong>` : ''}
+                ${data.utm_content ? ` &nbsp;|&nbsp; Content: <strong>${data.utm_content}</strong>` : ''}
+                ${data.utm_term ? ` &nbsp;|&nbsp; Keyword: <strong>${data.utm_term}</strong>` : ''}
+              </span>
+            </td>
+          </tr>` : ''}
         </table>
 
         <div style="margin-top: 24px; padding: 16px; background: #fff3cd; border-radius: 8px; border-left: 4px solid #FF6B35;">
