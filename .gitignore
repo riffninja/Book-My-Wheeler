@@ -1,0 +1,8 @@
+# Claude Code local data
+.claude/
+
+# Raw stock videos (only processed 1.mp4, 2.mp4, 3.mp4 should be committed)
+images/hero-videos/*
+!images/hero-videos/1.mp4
+!images/hero-videos/2.mp4
+!images/hero-videos/3.mp4

@@ -110,10 +110,11 @@ World-class UI/UX design expertise covering principles, trends, and Apple's late
 
 ### Tech Stack
 - Pure HTML5 + CSS3 + vanilla JS (no framework)
-- Google Fonts (Poppins + Inter — being replaced, see Design Decisions)
+- Google Fonts (Fraunces + DM Sans)
 - Font Awesome 6 (CDN) for icons
 - Google Apps Script backend for form submissions (google-apps-script.js)
-- Hosted as static files; images are local PNGs
+- Hosted as static files; images are local PNGs, hero videos are local MP4s
+- FFmpeg available at `C:\Users\User 27\AppData\Local\Microsoft\WinGet\Links\ffmpeg.exe` for video processing
 
 ### Business Context
 - Target market: Tourists visiting Goa, India
@@ -125,6 +126,7 @@ World-class UI/UX design expertise covering principles, trends, and Apple's late
 ### Constraints
 - No build pipeline — changes go directly into index.html
 - Images are local PNGs in /images/ folder
+- Hero videos are local MP4s in /images/hero-videos/ folder
 - Form uses Google Apps Script for submissions
 - Must keep WhatsApp CTA prominent (critical for Indian market)
 - Must keep the lead capture form in the hero section
@@ -177,6 +179,30 @@ World-class UI/UX design expertise covering principles, trends, and Apple's late
 
 ### Vehicle Cards
 **Decision (2026-03-06):** Increase vehicle image height from 190px to 240px. Photography is the strongest asset — let it breathe.
+
+### Hero Video Carousel
+**Decision (2026-03-10):** Replace static hero background image with a 3-video crossfade carousel.
+- Videos cycle every 5 seconds with CSS opacity crossfade transitions
+- Videos are self-hosted in `/images/hero-videos/` as `1.mp4`, `2.mp4`, `3.mp4`
+- All videos: 1280x720, 8 seconds, H.264, no audio, `movflags +faststart`
+- Source files used:
+  - `1.mp4` ← `10100717-uhd_2560_1440_30fps.mp4` (2.2 MB)
+  - `2.mp4` ← `4443732-hd_1920_1080_25fps.mp4` (467 KB)
+  - `3.mp4` ← `4443740-hd_1920_1080_25fps.mp4` (504 KB)
+- Total video payload: ~3.1 MB
+- Mobile fallback: videos hidden on mobile, static image shown instead (saves bandwidth)
+- Videos use `preload="metadata"` and inactive videos are paused after fade-out
+- `prefers-reduced-motion` disables the carousel for accessibility
+
+### Visual Redesign — Animations & Effects
+**Decision (2026-03-10):** Comprehensive visual overhaul to eliminate generic AI look.
+- **Scroll reveal animations**: `IntersectionObserver` triggers CSS transitions on `[data-reveal]` elements (up/left/right/scale variants) and `[data-stagger]` containers with staggered child delays
+- **Hover effects**: Vehicle card image zoom (`scale(1.06)`), feature card bottom border slide (`scaleX`), nav link underline animation, CTA button glow/lift
+- **Noise texture**: CSS SVG filter data URI on dark sections (navbar, footer, stats bar)
+- **Hero parallax**: `background-attachment: fixed` with `requestAnimationFrame` scroll handler
+- **FAQ smooth accordion**: `max-height` transition replacing `display:none` toggle
+- All animations use `transform`/`opacity` only for GPU acceleration
+- All animations respect `prefers-reduced-motion` media query
 
 ---
 
@@ -288,3 +314,26 @@ UTM params are read from `window.location.search` at page load via the `_utmPara
 ### Admin email
 - Recipient: `bookmywheeler@gmail.com`
 - Also shown in footer of website: `bookmywheeler@gmail.com`
+
+---
+
+## Hero Video Processing
+
+### FFmpeg path
+```
+C:\Users\User 27\AppData\Local\Microsoft\WinGet\Links\ffmpeg.exe
+```
+
+### Processing command template
+```bash
+ffmpeg -y -i <input.mp4> -t 8 -vf "scale=1280:720:force_original_aspect_ratio=decrease,pad=1280:720:(ow-iw)/2:(oh-ih)/2,setsar=1" -c:v libx264 -crf 28 -preset slow -an -movflags +faststart <output.mp4>
+```
+- `-t 8`: trim to 8 seconds
+- `scale=1280:720`: resize to 720p
+- `-crf 28`: quality (lower = bigger/better, 28 is good for background video)
+- `-preset slow`: better compression ratio
+- `-an`: strip audio
+- `-movflags +faststart`: move metadata to start for streaming
+
+### Raw video library
+12 raw stock videos are stored in `/images/hero-videos/` alongside the processed `1.mp4`, `2.mp4`, `3.mp4`. Raw files should NOT be committed to git — only the processed files.
