@@ -494,7 +494,9 @@
     /* ============================================================
        WHY CHOOSE US
     ============================================================ */
-    .why-section { background: var(--off-white); }
+    .why-section { background: #F0F7FB; position: relative; overflow: hidden; }
+    .why-section canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+    .why-section .container { position: relative; z-index: 1; }
     .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 48px; }
     .feature-card {
       background: white; border-radius: var(--radius-lg); padding: 28px 24px;
@@ -1261,6 +1263,7 @@
 
 <!-- ========== WHY CHOOSE US ========== -->
 <section class="section why-section" id="why-us">
+  <canvas id="vehicleCanvas"></canvas>
   <div class="container">
     <div data-reveal="up" style="text-align:center;">
       <span class="section-tag">Our Advantage</span>
@@ -1487,14 +1490,14 @@
           What documents are required to rent a vehicle?
           <i class="fas fa-chevron-down"></i>
         </div>
-        <div class="faq-a">You'll need a valid driving licence (DL), a government-issued photo ID (Aadhaar card or passport), and one security deposit cheque. The cheque is held as a security measure and will not be cashed unless there is damage to the vehicle.</div>
+        <div class="faq-a">You'll need a valid driving licence (DL) and a government-issued photo ID (Aadhaar card, PAN card, or passport). These documents will be handed back once the vehicle is returned.</div>
       </div>
       <div class="faq-item">
         <div class="faq-q" onclick="toggleFaq(this)">
           Is fuel included in the rental price?
           <i class="fas fa-chevron-down"></i>
         </div>
-        <div class="faq-a">No, fuel is not included. Vehicles are delivered with a full tank and should be returned with a full tank as well. This ensures transparency and fairness for all customers.</div>
+        <div class="faq-a">No, fuel is not included in the rental price.</div>
       </div>
       <div class="faq-item">
         <div class="faq-q" onclick="toggleFaq(this)">
@@ -1972,6 +1975,289 @@
       ticking = true;
     }
   });
+
+  // ============================================================
+  // VEHICLE CANVAS — animated silhouettes on Why Section
+  // ============================================================
+  (function() {
+    const canvas = document.getElementById('vehicleCanvas');
+    if (!canvas) return;
+    // Skip on mobile and reduced motion
+    if (window.matchMedia('(max-width: 768px)').matches) { canvas.remove(); return; }
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { canvas.remove(); return; }
+
+    const ctx = canvas.getContext('2d');
+    const section = canvas.closest('.why-section');
+    let W, H, particles = [], mouse = { x: -999, y: -999 }, animId = null, isVisible = false;
+
+    // Vehicle silhouettes: scooter (Activa-style), motorcycle, and car
+    function drawScooter(ctx, x, y, size, alpha, flip) {
+      ctx.save();
+      ctx.translate(x, y);
+      if (flip) ctx.scale(-1, 1);
+      ctx.globalAlpha = alpha;
+      ctx.strokeStyle = '#0077B6';
+      ctx.lineWidth = 1.5;
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      const s = size / 44;
+      // Rear wheel
+      ctx.beginPath(); ctx.arc(14 * s, 10 * s, 5.5 * s, 0, Math.PI * 2); ctx.stroke();
+      // Front wheel
+      ctx.beginPath(); ctx.arc(-14 * s, 10 * s, 5.5 * s, 0, Math.PI * 2); ctx.stroke();
+      // Floorboard + body (flat step-through)
+      ctx.beginPath();
+      ctx.moveTo(14 * s, 4 * s);
+      ctx.lineTo(10 * s, -2 * s);
+      ctx.lineTo(6 * s, -6 * s); // seat back
+      ctx.lineTo(-2 * s, -6 * s); // seat front
+      ctx.lineTo(-4 * s, -2 * s); // step-through dip
+      ctx.lineTo(-8 * s, -2 * s); // floorboard
+      ctx.lineTo(-10 * s, -6 * s); // front column rise
+      ctx.lineTo(-12 * s, -14 * s); // steering column
+      ctx.stroke();
+      // Handlebar
+      ctx.beginPath();
+      ctx.moveTo(-15 * s, -15 * s);
+      ctx.lineTo(-9 * s, -15 * s);
+      ctx.stroke();
+      // Seat (thick)
+      ctx.beginPath();
+      ctx.moveTo(-2 * s, -6.5 * s);
+      ctx.lineTo(7 * s, -6.5 * s);
+      ctx.lineWidth = 2.5;
+      ctx.stroke();
+      // Front mudguard
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.arc(-14 * s, 10 * s, 7 * s, Math.PI * 1.15, Math.PI * 1.85);
+      ctx.stroke();
+      // Rear mudguard
+      ctx.beginPath();
+      ctx.arc(14 * s, 10 * s, 7 * s, Math.PI * 1.15, Math.PI * 1.85);
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    function drawMotorcycle(ctx, x, y, size, alpha, flip) {
+      ctx.save();
+      ctx.translate(x, y);
+      if (flip) ctx.scale(-1, 1);
+      ctx.globalAlpha = alpha;
+      ctx.strokeStyle = '#0077B6';
+      ctx.lineWidth = 1.5;
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      const s = size / 46;
+      // Rear wheel
+      ctx.beginPath(); ctx.arc(14 * s, 10 * s, 6 * s, 0, Math.PI * 2); ctx.stroke();
+      // Front wheel
+      ctx.beginPath(); ctx.arc(-14 * s, 10 * s, 6 * s, 0, Math.PI * 2); ctx.stroke();
+      // Engine block
+      ctx.beginPath();
+      ctx.moveTo(4 * s, 4 * s);
+      ctx.lineTo(8 * s, 4 * s);
+      ctx.lineTo(6 * s, 10 * s);
+      ctx.lineTo(0 * s, 10 * s);
+      ctx.closePath();
+      ctx.stroke();
+      // Frame — rear triangle
+      ctx.beginPath();
+      ctx.moveTo(14 * s, 4 * s);
+      ctx.lineTo(4 * s, -4 * s);
+      ctx.lineTo(4 * s, 4 * s);
+      ctx.lineTo(14 * s, 10 * s);
+      ctx.stroke();
+      // Frame — top tube to front fork
+      ctx.beginPath();
+      ctx.moveTo(4 * s, -4 * s);
+      ctx.lineTo(-4 * s, -6 * s);
+      ctx.lineTo(-14 * s, 10 * s);
+      ctx.stroke();
+      // Fuel tank
+      ctx.beginPath();
+      ctx.moveTo(0 * s, -5 * s);
+      ctx.quadraticCurveTo(2 * s, -9 * s, 5 * s, -5 * s);
+      ctx.stroke();
+      // Seat
+      ctx.beginPath();
+      ctx.moveTo(4 * s, -5 * s);
+      ctx.lineTo(11 * s, -2 * s);
+      ctx.lineWidth = 2.5;
+      ctx.stroke();
+      // Handlebar
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(-8 * s, -10 * s);
+      ctx.lineTo(-5 * s, -7 * s);
+      ctx.moveTo(-7 * s, -11 * s);
+      ctx.lineTo(-2 * s, -11 * s);
+      ctx.stroke();
+      // Exhaust pipe
+      ctx.beginPath();
+      ctx.moveTo(6 * s, 8 * s);
+      ctx.lineTo(12 * s, 6 * s);
+      ctx.lineTo(16 * s, 6 * s);
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    function drawCar(ctx, x, y, size, alpha, flip) {
+      ctx.save();
+      ctx.translate(x, y);
+      if (flip) ctx.scale(-1, 1);
+      ctx.globalAlpha = alpha;
+      ctx.strokeStyle = '#0077B6';
+      ctx.lineWidth = 1.5;
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      const s = size / 50;
+      // Wheels
+      ctx.beginPath();
+      ctx.arc(-14 * s, 10 * s, 5 * s, 0, Math.PI * 2);
+      ctx.moveTo(19 * s, 10 * s);
+      ctx.arc(14 * s, 10 * s, 5 * s, 0, Math.PI * 2);
+      ctx.stroke();
+      // Body
+      ctx.beginPath();
+      ctx.moveTo(-22 * s, 5 * s);
+      ctx.lineTo(-22 * s, 0);
+      ctx.lineTo(-16 * s, -8 * s);
+      ctx.lineTo(-4 * s, -12 * s);
+      ctx.lineTo(8 * s, -12 * s);
+      ctx.lineTo(16 * s, -8 * s);
+      ctx.lineTo(22 * s, -2 * s);
+      ctx.lineTo(22 * s, 5 * s);
+      ctx.closePath();
+      ctx.stroke();
+      // Windows
+      ctx.beginPath();
+      ctx.moveTo(-14 * s, -7 * s);
+      ctx.lineTo(-6 * s, -11 * s);
+      ctx.lineTo(-2 * s, -11 * s);
+      ctx.lineTo(-2 * s, -2 * s);
+      ctx.lineTo(-14 * s, -2 * s);
+      ctx.closePath();
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(1 * s, -11 * s);
+      ctx.lineTo(10 * s, -11 * s);
+      ctx.lineTo(14 * s, -7 * s);
+      ctx.lineTo(14 * s, -2 * s);
+      ctx.lineTo(1 * s, -2 * s);
+      ctx.closePath();
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    function resize() {
+      const rect = section.getBoundingClientRect();
+      W = canvas.width = rect.width * devicePixelRatio;
+      H = canvas.height = rect.height * devicePixelRatio;
+      canvas.style.width = rect.width + 'px';
+      canvas.style.height = rect.height + 'px';
+      ctx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
+    }
+
+    function createParticles() {
+      particles = [];
+      const count = Math.min(18, Math.floor((W / devicePixelRatio) / 80));
+      for (let i = 0; i < count; i++) {
+        const r = Math.random();
+        const type = r < 0.35 ? 'scooter' : r < 0.65 ? 'motorcycle' : 'car';
+        const sz = type === 'car' ? 28 + Math.random() * 18 : 24 + Math.random() * 14;
+        particles.push({
+          x: Math.random() * (W / devicePixelRatio),
+          y: Math.random() * (H / devicePixelRatio),
+          vx: (Math.random() - 0.3) * 0.6,
+          vy: (Math.random() - 0.5) * 0.15,
+          size: sz,
+          alpha: 0.06 + Math.random() * 0.08,
+          baseAlpha: 0.06 + Math.random() * 0.08,
+          type: type,
+          flip: Math.random() > 0.5
+        });
+      }
+    }
+
+    function animate() {
+      if (!isVisible) return;
+      const w = W / devicePixelRatio;
+      const h = H / devicePixelRatio;
+      ctx.clearRect(0, 0, w, h);
+
+      for (const p of particles) {
+        // Mouse repulsion
+        const dx = p.x - mouse.x;
+        const dy = p.y - mouse.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        const repelRadius = 120;
+        if (dist < repelRadius && dist > 0) {
+          const force = (1 - dist / repelRadius) * 2.5;
+          p.vx += (dx / dist) * force;
+          p.vy += (dy / dist) * force;
+          p.alpha = Math.min(0.22, p.baseAlpha + (1 - dist / repelRadius) * 0.14);
+        } else {
+          p.alpha += (p.baseAlpha - p.alpha) * 0.04;
+        }
+
+        // Friction
+        p.vx *= 0.985;
+        p.vy *= 0.985;
+
+        // Drift (mostly rightward for scooters, leftward for some cars)
+        p.vx += p.flip ? -0.003 : 0.003;
+
+        p.x += p.vx;
+        p.y += p.vy;
+
+        // Wrap around
+        if (p.x > w + 30) p.x = -30;
+        if (p.x < -30) p.x = w + 30;
+        if (p.y > h + 20) p.y = -20;
+        if (p.y < -20) p.y = h + 20;
+
+        // Draw
+        if (p.type === 'scooter') {
+          drawScooter(ctx, p.x, p.y, p.size, p.alpha, p.flip);
+        } else if (p.type === 'motorcycle') {
+          drawMotorcycle(ctx, p.x, p.y, p.size, p.alpha, p.flip);
+        } else {
+          drawCar(ctx, p.x, p.y, p.size, p.alpha, p.flip);
+        }
+      }
+      animId = requestAnimationFrame(animate);
+    }
+
+    // Mouse tracking relative to section
+    section.addEventListener('mousemove', function(e) {
+      const rect = section.getBoundingClientRect();
+      mouse.x = e.clientX - rect.left;
+      mouse.y = e.clientY - rect.top;
+    });
+    section.addEventListener('mouseleave', function() {
+      mouse.x = -999;
+      mouse.y = -999;
+    });
+
+    // Only animate when visible
+    const canvasObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          isVisible = true;
+          resize();
+          if (!particles.length) createParticles();
+          animate();
+        } else {
+          isVisible = false;
+          if (animId) { cancelAnimationFrame(animId); animId = null; }
+        }
+      });
+    }, { threshold: 0.05 });
+    canvasObserver.observe(section);
+
+    window.addEventListener('resize', () => { if (isVisible) { resize(); createParticles(); } });
+  })();
 
   // ============================================================
   // FORM SUBMISSION
