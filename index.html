@@ -12,8 +12,12 @@
   <meta property="og:type" content="website" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700;9..144,900&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <!-- Google Fonts: async load (non-render-blocking) -->
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700;9..144,900&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600&display=swap" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700;9..144,900&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+  <!-- Font Awesome: defer until after first paint -->
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" media="print" onload="this.media='all'" />
   <style>
     /* ============================================================
        CSS VARIABLES
@@ -273,7 +277,7 @@
     ============================================================ */
     .hero {
       min-height: 100vh;
-      background: url('images/hero-banner.jpg') center center / cover no-repeat;
+      background: url('images/hero-banner.webp') center center / cover no-repeat;
       position: relative; overflow: hidden;
       display: flex; align-items: center;
       padding: 100px 0 60px;
@@ -622,7 +626,7 @@
        CTA BANNER
     ============================================================ */
     .cta-banner {
-      background: url('images/hero-banner.jpg') center center / cover no-repeat;
+      background: url('images/hero-banner.webp') center center / cover no-repeat;
       padding: 100px 0; text-align: center; position: relative; overflow: hidden;
     }
     .cta-banner::before {
@@ -649,7 +653,7 @@
     .footer-socials { display: flex; gap: 10px; }
     .social-icon { width: 40px; height: 40px; border-radius: 10px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); color: rgba(255,255,255,0.7); display: flex; align-items: center; justify-content: center; font-size: 16px; transition: var(--transition); }
     .social-icon:hover { background: var(--primary); border-color: var(--primary); color: white; transform: translateY(-2px); }
-    .footer-col h4 { font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 700; color: white; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 20px; }
+    .footer-col h3 { font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 700; color: white; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 20px; }
     .footer-col ul li { margin-bottom: 10px; }
     .footer-col ul a { font-size: 14px; color: rgba(255,255,255,0.55); transition: color 0.2s; }
     .footer-col ul a:hover { color: var(--teal); }
@@ -673,7 +677,7 @@
       transition: var(--transition);
     }
     .float-wa:hover { transform: scale(1.1); box-shadow: 0 6px 28px rgba(37,211,102,0.7); animation: none; }
-    @keyframes float-pulse { 0%,100%{box-shadow:0 4px 20px rgba(37,211,102,0.5);} 50%{box-shadow:0 4px 30px rgba(37,211,102,0.8), 0 0 0 10px rgba(37,211,102,0.1);} }
+    @keyframes float-pulse { 0%,100%{ transform: scale(1); } 50%{ transform: scale(1.08); } }
     .scroll-top {
       position: fixed; bottom: 20px; right: 30px; z-index: 500;
       width: 44px; height: 44px; background: var(--navy); border-radius: var(--radius);
@@ -782,15 +786,24 @@
 <section class="hero" id="home">
   <div class="hero-video-wrap" id="heroVideoWrap">
     <video muted playsinline preload="metadata" class="active">
-      <source src="images/hero-videos/1.mp4" type="video/mp4">
+      <source data-src="images/hero-videos/1.mp4" type="video/mp4">
     </video>
     <video muted playsinline preload="metadata">
-      <source src="images/hero-videos/2.mp4" type="video/mp4">
+      <source data-src="images/hero-videos/2.mp4" type="video/mp4">
     </video>
     <video muted playsinline preload="metadata">
-      <source src="images/hero-videos/3.mp4" type="video/mp4">
+      <source data-src="images/hero-videos/3.mp4" type="video/mp4">
     </video>
   </div>
+  <script>
+    // Only load hero videos on desktop (saves ~3MB on mobile)
+    if (window.innerWidth > 768) {
+      document.querySelectorAll('#heroVideoWrap source[data-src]').forEach(function(s) {
+        s.src = s.getAttribute('data-src');
+        s.parentElement.load();
+      });
+    }
+  </script>
   <div class="container">
     <div class="hero-inner">
       <!-- Hero Text -->
@@ -825,14 +838,14 @@
         <form id="leadForm" novalidate>
           <div class="form-grid">
             <div class="form-group full">
-              <label>Full Name *</label>
+              <label for="fullName">Full Name *</label>
               <div class="input-wrap">
                 <i class="fas fa-user"></i>
                 <input type="text" class="form-control" id="name" placeholder="Your full name" required />
               </div>
             </div>
             <div class="form-group">
-              <label>Phone Number *</label>
+              <label for="phone">Phone Number *</label>
               <div class="input-wrap">
                 <i class="fas fa-phone"></i>
                 <input type="tel" class="form-control" id="phone" placeholder="+91 XXXXX XXXXX" required />
@@ -846,7 +859,7 @@
               </div>
             </div>
             <div class="form-group">
-              <label>Vehicle Type *</label>
+              <label for="vehicleType">Vehicle Type *</label>
               <div class="input-wrap">
                 <i class="fas fa-motorcycle"></i>
                 <select class="form-control" id="vehicleType" required>
@@ -857,7 +870,7 @@
               </div>
             </div>
             <div class="form-group" id="vehicleSelectGroup" style="display:none;">
-              <label>Select Vehicle *</label>
+              <label for="vehicleSelect">Select Vehicle *</label>
               <div class="input-wrap">
                 <i class="fas fa-car"></i>
                 <select class="form-control" id="vehicleSelect">
@@ -866,7 +879,7 @@
               </div>
             </div>
             <div class="form-group">
-              <label>Pickup Location *</label>
+              <label for="pickupLocation">Pickup Location *</label>
               <div class="input-wrap">
                 <i class="fas fa-map-marker-alt"></i>
                 <select class="form-control" id="pickupLocation" required>
@@ -899,14 +912,14 @@
               </div>
             </div>
             <div class="form-group">
-              <label>Pickup Date *</label>
+              <label for="pickupDate">Pickup Date *</label>
               <div class="input-wrap">
                 <i class="fas fa-calendar-alt"></i>
                 <input type="date" class="form-control" id="pickupDate" required />
               </div>
             </div>
             <div class="form-group">
-              <label>Return Date *</label>
+              <label for="returnDate">Return Date *</label>
               <div class="input-wrap">
                 <i class="fas fa-calendar-check"></i>
                 <input type="date" class="form-control" id="returnDate" required />
@@ -984,7 +997,7 @@
       <!-- SCOOTERS -->
       <div class="vehicle-card fade-in" data-type="scooter">
         <div class="vehicle-img scooter-bg">
-          <img src="images/Honda Activa.png" alt="Honda Activa 6G" loading="lazy">
+          <img src="images/Honda Activa.webp" width="384" height="240" alt="Honda Activa 6G" loading="lazy">
           <div class="vehicle-badge popular">Most Popular</div>
         </div>
         <div class="vehicle-body">
@@ -1000,7 +1013,7 @@
 
       <div class="vehicle-card fade-in" data-type="scooter">
         <div class="vehicle-img scooter-bg">
-          <img src="images/Yamaha Fascino.png" alt="Yamaha Fascino" loading="lazy">
+          <img src="images/Yamaha Fascino.webp" width="384" height="240" alt="Yamaha Fascino" loading="lazy">
         </div>
         <div class="vehicle-body">
           <div class="vehicle-name">Yamaha Fascino</div>
@@ -1016,7 +1029,7 @@
       <!-- CARS -->
       <div class="vehicle-card fade-in" data-type="car" data-subtype="hatchback">
         <div class="vehicle-img car-bg">
-          <img src="images/Maruthi Swift.png" alt="Maruti Swift" loading="lazy">
+          <img src="images/Maruthi Swift.webp" width="384" height="240" alt="Maruti Swift" loading="lazy">
           <div class="vehicle-badge popular">Most Popular</div>
         </div>
         <div class="vehicle-body">
@@ -1032,7 +1045,7 @@
 
       <div class="vehicle-card fade-in" data-type="car" data-subtype="hatchback">
         <div class="vehicle-img car-bg">
-          <img src="images/Mahindra Baleno.png" alt="Maruti Baleno" loading="lazy">
+          <img src="images/Mahindra Baleno.webp" width="384" height="240" alt="Maruti Baleno" loading="lazy">
         </div>
         <div class="vehicle-body">
           <div class="vehicle-name">Maruti Baleno</div>
@@ -1047,7 +1060,7 @@
 
       <div class="vehicle-card fade-in" data-type="car" data-subtype="hatchback">
         <div class="vehicle-img car-bg">
-          <img src="images/Hyundai i20.png" alt="Hyundai i20" loading="lazy">
+          <img src="images/Hyundai i20.webp" width="384" height="240" alt="Hyundai i20" loading="lazy">
         </div>
         <div class="vehicle-body">
           <div class="vehicle-name">Hyundai i20</div>
@@ -1062,7 +1075,7 @@
 
       <div class="vehicle-card fade-in" data-type="car" data-subtype="sedan">
         <div class="vehicle-img car-bg">
-          <img src="images/Maruthi Swift Dzire.png" alt="Maruti Swift Dzire" loading="lazy">
+          <img src="images/Maruthi Swift Dzire.webp" width="384" height="240" alt="Maruti Swift Dzire" loading="lazy">
         </div>
         <div class="vehicle-body">
           <div class="vehicle-name">Maruti Swift Dzire</div>
@@ -1077,7 +1090,7 @@
 
       <div class="vehicle-card fade-in" data-type="car" data-subtype="hatchback">
         <div class="vehicle-img car-bg">
-          <img src="images/Maruthi Fronx.png" alt="Maruti Fronx" loading="lazy">
+          <img src="images/Maruthi Fronx.webp" width="384" height="240" alt="Maruti Fronx" loading="lazy">
         </div>
         <div class="vehicle-body">
           <div class="vehicle-name">Maruti Fronx</div>
@@ -1092,7 +1105,7 @@
 
       <div class="vehicle-card fade-in" data-type="car" data-subtype="suv">
         <div class="vehicle-img suv-bg">
-          <img src="images/Hyundai Venue.png" alt="Hyundai Venue" loading="lazy">
+          <img src="images/Hyundai Venue.webp" width="384" height="240" alt="Hyundai Venue" loading="lazy">
         </div>
         <div class="vehicle-body">
           <div class="vehicle-name">Hyundai Venue</div>
@@ -1107,7 +1120,7 @@
 
       <div class="vehicle-card fade-in" data-type="car" data-subtype="suv">
         <div class="vehicle-img suv-bg">
-          <img src="images/Hyundai Creta.png" alt="Hyundai Creta" loading="lazy">
+          <img src="images/Hyundai Creta.webp" width="384" height="240" alt="Hyundai Creta" loading="lazy">
           <div class="vehicle-badge popular">Most Popular</div>
         </div>
         <div class="vehicle-body">
@@ -1123,7 +1136,7 @@
 
       <div class="vehicle-card fade-in" data-type="car" data-subtype="suv">
         <div class="vehicle-img suv-bg">
-          <img src="images/Mahindra Thar.png" alt="Mahindra Thar" loading="lazy">
+          <img src="images/Mahindra Thar.webp" width="384" height="240" alt="Mahindra Thar" loading="lazy">
         </div>
         <div class="vehicle-body">
           <div class="vehicle-name">Mahindra Thar</div>
@@ -1138,7 +1151,7 @@
 
       <div class="vehicle-card fade-in" data-type="car" data-subtype="suv">
         <div class="vehicle-img suv-bg">
-          <img src="images/Mahindra Thar ROXX.png" alt="Mahindra Thar ROXX" loading="lazy">
+          <img src="images/Mahindra Thar ROXX.webp" width="384" height="240" alt="Mahindra Thar ROXX" loading="lazy">
         </div>
         <div class="vehicle-body">
           <div class="vehicle-name">Mahindra Thar ROXX</div>
@@ -1153,7 +1166,7 @@
 
       <div class="vehicle-card fade-in" data-type="car" data-subtype="suv">
         <div class="vehicle-img suv-bg">
-          <img src="images/Mahindra Scorpio.png" alt="Mahindra Scorpio" loading="lazy">
+          <img src="images/Mahindra Scorpio.webp" width="384" height="240" alt="Mahindra Scorpio" loading="lazy">
         </div>
         <div class="vehicle-body">
           <div class="vehicle-name">Mahindra Scorpio</div>
@@ -1168,7 +1181,7 @@
 
       <div class="vehicle-card fade-in" data-type="car" data-subtype="suv">
         <div class="vehicle-img suv-bg">
-          <img src="images/Hyundai Alcazar.png" alt="Hyundai Alcazar" loading="lazy">
+          <img src="images/Hyundai Alcazar.webp" width="384" height="240" alt="Hyundai Alcazar" loading="lazy">
         </div>
         <div class="vehicle-body">
           <div class="vehicle-name">Hyundai Alcazar</div>
@@ -1183,7 +1196,7 @@
 
       <div class="vehicle-card fade-in" data-type="car" data-subtype="mpv">
         <div class="vehicle-img car-bg">
-          <img src="images/Maruthi Ertiga.png" alt="Maruti Ertiga" loading="lazy">
+          <img src="images/Maruthi Ertiga.webp" width="384" height="240" alt="Maruti Ertiga" loading="lazy">
         </div>
         <div class="vehicle-body">
           <div class="vehicle-name">Maruti Ertiga</div>
@@ -1198,7 +1211,7 @@
 
       <div class="vehicle-card fade-in" data-type="car" data-subtype="mpv">
         <div class="vehicle-img car-bg">
-          <img src="images/Maruthi XL6.png" alt="Maruti XL6" loading="lazy">
+          <img src="images/Maruthi XL6.webp" width="384" height="240" alt="Maruti XL6" loading="lazy">
         </div>
         <div class="vehicle-body">
           <div class="vehicle-name">Maruti XL6</div>
@@ -1213,7 +1226,7 @@
 
       <div class="vehicle-card fade-in" data-type="car" data-subtype="mpv">
         <div class="vehicle-img car-bg">
-          <img src="images/Toyota Innova Crysta.png" alt="Toyota Innova Crysta" loading="lazy">
+          <img src="images/Toyota Innova Crysta.webp" width="384" height="240" alt="Toyota Innova Crysta" loading="lazy">
           <div class="vehicle-badge popular">Most Popular</div>
         </div>
         <div class="vehicle-body">
@@ -1229,7 +1242,7 @@
 
       <div class="vehicle-card fade-in" data-type="car" data-subtype="mpv">
         <div class="vehicle-img car-bg">
-          <img src="images/Toyota Innova HyCross.png" alt="Toyota Innova HyCross" loading="lazy">
+          <img src="images/Toyota Innova HyCross.webp" width="384" height="240" alt="Toyota Innova HyCross" loading="lazy">
         </div>
         <div class="vehicle-body">
           <div class="vehicle-name">Toyota Innova HyCross</div>
@@ -1244,7 +1257,7 @@
 
       <div class="vehicle-card fade-in" data-type="car" data-subtype="suv">
         <div class="vehicle-img suv-bg">
-          <img src="images/Toyota Fortuner.png" alt="Toyota Fortuner" loading="lazy">
+          <img src="images/Toyota Fortuner.webp" width="384" height="240" alt="Toyota Fortuner" loading="lazy">
         </div>
         <div class="vehicle-body">
           <div class="vehicle-name">Toyota Fortuner</div>
@@ -1571,7 +1584,7 @@
         </div>
       </div>
       <div class="footer-col">
-        <h4>Quick Links</h4>
+        <h3>Quick Links</h3>
         <ul>
           <li><a href="#home">Home</a></li>
           <li><a href="#fleet">Our Fleet</a></li>
@@ -1582,7 +1595,7 @@
         </ul>
       </div>
       <div class="footer-col">
-        <h4>Our Fleet</h4>
+        <h3>Our Fleet</h3>
         <ul>
           <li><a href="#fleet">Scooters</a></li>
           <li><a href="#fleet">Bikes</a></li>
@@ -1593,7 +1606,7 @@
         </ul>
       </div>
       <div class="footer-col">
-        <h4>Contact Us</h4>
+        <h3>Contact Us</h3>
         <div class="footer-contact-item">
           <i class="fas fa-phone"></i>
           <span><a href="tel:+919579868810" style="color:inherit;">+91 95798 68810</a></span>
